@@ -49,7 +49,9 @@ angular.module('eventModule', [])
                 $scope.errorEmail = response.errors.email;
               } else {
                 $scope.access_token = response.access_token;
-                console.log("response: " + $scope.access_token)
+                $scope.refresh_token = response.refresh_token;
+                console.log("access_token: " + $scope.access_token
+                	        "refresh_token: " + $scope.refresh_token)
               }
             })
             .error(function (data, status, headers, config) {
