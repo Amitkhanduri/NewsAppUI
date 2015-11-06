@@ -13,11 +13,11 @@ angular.module('mainApp', ['eventModule','ngRoute','ui.router'])
 
         })
         
-        .state("contact", {
+        .state("login", {
 
           // Use a url of "/" to set a states as the "index".
-          url: "/contact",
-          templateUrl: 'contact.html'
+          url: "/login",
+          templateUrl: 'login.html'
 
         })
 
