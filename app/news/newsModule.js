@@ -2,7 +2,7 @@
 
 (function(){
 
-angular.module('newsModule', [])
+angular.module('newsModule', ['ngStorage'])
 .factory([function () {	
 
 }])
@@ -16,47 +16,30 @@ angular.module('newsModule', [])
 .controller('NewsCtrl', [function () {
 	
 }])
-.controller('NewsDataCtrl', ['$scope','$http',function ($scope , $http) {
+.controller('NewsDataCtrl', ['$scope','$http',function ($scope , $http , $localStorage) {
+
+  var baseUrl = "http://ec2-52-27-107-78.us-west-2.compute.amazonaws.com:8080"
            
     $scope.submitNews = function() {
 
-      var newsData = {
-                      "title": "Modi",
-                      "shortDescription":"Prime Minister of India",
-                      "body": "India",
-                      "sourceUrl": "http://www.thehindu.com/multimedia/dynamic/01938/Modi_1938656f.jpg",
-                      "videoUrl": "http://www.thehindu.com/multimedia/dynamic/01938/Modi_1938656f.jpg",
-                      "category": {
-                              "name": "India"
-                      },
-                     "featuredImage": {
-                              "url": "http://www.thehindu.com/multimedia/dynamic/01938/Modi_1938656f.jpg",
-                              "description": "Hindu"
-                      },
-                     "galleryImages": [
-                          {
-                      "url": "http://www.thehindu.com/multimedia/dynamic/01938/Modi_1938656f.jpg",
-                      "description": "the Hindu"
-                      },
-                      {
-                      "url": "http://www.thehindu.com/multimedia/dynamic/01938/Modi_1938656f.jpg",
-                      "description": "Namo Namo"
-                       }
-                      ]
-                   };
+         var newsData=$scope.news;
+         var accesstoken = $localStorage.access_token;
+
+         console.log("access_token: " + accesstoken)
+
                  
      $http({
           method  : 'POST',
-          url     :  baseUrl + '/news',
-          data    :  JSON.stringify(newsData),    
+          url     :  baseUrl + '/news',   
+          data    :  newsData,
           headers :  {'Content-Type': 'application/json',
-                      'Authorization': "Bearer access_token"
+                      'Authorization': "Bearer " + accesstoken
                      }                             
            })
     }  
 }])
 
-.controller('LoginCtrl', ['$scope', '$http', '$location',function ($scope, $http , $location) {
+.controller('LoginCtrl', ['$scope', '$http', '$location', '$localStorage' ,function ($scope, $http , $location , $localStorage ) {
 
 	var baseUrl = "http://ec2-52-27-107-78.us-west-2.compute.amazonaws.com:8080"
 
@@ -85,11 +68,13 @@ angular.module('newsModule', [])
                 $scope.errorUserName = response.errors.username;
                 $scope.errorEmail = response.errors.email;
               } else {
-                $scope.access_token = response.access_token;
-                $scope.refresh_token = response.refresh_token;
-                $location.url('/newsForm');
-                console.log("access_token: " + $scope.access_token,
-                	        "refresh_token: " + $scope.refresh_token)
+                //$scope.access_token = response.access_token;
+                //$scope.refresh_token = response.refresh_token;
+                 $localStorage.access_token = response.access_token;
+                 $localStorage.refresh_token = response.refresh_token;
+                 $location.url('/newsForm');
+                 console.log("access_token: " + $localStorage.access_token,
+                	        "refresh_token: " + $localStorage.refresh_token)
               }
             })
             .error(function (data, status, headers, config) {
