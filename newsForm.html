@@ -4,77 +4,78 @@
 <div class="row">
   <div class="col-md-12">
    </div>
-  <form  ng-controller="NewsCtrl" role="form" >
+  <form  ng-controller="NewsDataCtrl" role="form" >
     <div class="col-lg-6">
+
+      <h1 class="page-header">NewsForm</h1>
       <!--div class="well well-sm"><strong><i class="glyphicon glyphicon-ok form-control-feedback"></i> Required Field</strong></div-->
       <div class="form-group">
         <label for="InputTitle">Title</label>
         <div class="input-group">
           <input type="text" class="form-control" name="InputTitle" id="InputTitle" placeholder="Title" required ng-model="news.title">
-          <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span></div>
+          <span class="input-group-addon"><i></i></span></div>
       </div>
       <div class="form-group">
         <label for="InputShortDescription">Short Description</label>
         <div class="input-group">
           <input type="text" class="form-control" id="InputShortDescription" name="InputShortDescription" placeholder="Short Description" required ng-model="news.shortDescription" >
-          <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span></div>
+          <span class="input-group-addon"><i></i></span></div>
       </div>
        <div class="form-group">
         <label for="InputBody">Body</label>
         <div class="input-group">
           <input type="text" class="form-control" id="InputBody" name="InputBody" placeholder="News Body" required ng-model="news.body" >
-          <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span></div>
+          <span class="input-group-addon"><i></i></span></div>
       </div>
       <div class="form-group">
         <label for="InputSourceUrl">Source URL</label>
         <div class="input-group">
           <input type="url" class="form-control" id="InputSourceUrl" name="InputSourceUrl" placeholder="Source URL" required ng-model="news.sourceUrl" >
-          <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span></div>
+          <span class="input-group-addon"><i></i></span></div>
       </div>
       <div class="form-group">
         <label for="InputVideoUrl">Video URL</label>
         <div class="input-group">
           <input type="url" class="form-control" id="InputVideoUrl" name="InputVideoUrl" placeholder="Video URL" required ng-model="news.videoUrl" >
-          <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span></div>
+          <span class="input-group-addon"><i></i></span></div>
       </div>
       <div class="form-group">
         <label for="InputCategoryName">Category Name</label>
         <div class="input-group">
           <input type="text" class="form-control" id="InputCategoryName" name="InputCategoryName" placeholder="Category Name" required ng-model="category.name" >
-          <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span></div>
+          <span class="input-group-addon"><i></i></span></div>
       </div>
       <div class="form-group">
-        <label for="InputFeaturedImageUrl">FeaturedImage URL</label>
+        <label for="InputFeaturedImageUrl">Featured Image URL</label>
         <div class="input-group">
           <input type="url" class="form-control" id="InputFeaturedImageUrl" name="InputFeaturedImageUrl" placeholder="FeaturedImage URL" required ng-model="featuredImage.url" >
-          <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span></div>
+          <span class="input-group-addon"><i></i></span></div>
       </div>
        <div class="form-group">
-        <label for="InputFeaturedImageDescription">FeaturedImage Description</label>
+        <label for="InputFeaturedImageDescription">Featured Image Description</label>
         <div class="input-group">
           <input type="text" class="form-control" id="InputFeaturedImageDescription" name="InputFeaturedImageDescription" placeholder="FeaturedImage Description" required ng-model="featuredImage.url" >
-          <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span></div>
+          <span class="input-group-addon"><i></i></span></div>
       </div>
        <div class="form-group">
-        <label for="InputGalleryImageUrl">GalleryImage URL</label>
+        <label for="InputGalleryImageUrl">Gallery Image URL</label>
         <div class="input-group">
           <input type="url" class="form-control" id="InputGalleryImageUrl" name="InputGalleryImageUrl" placeholder="GalleryImage URL" required ng-model="galleryImage.url">
-          <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span></div>
+          <span class="input-group-addon"><i></i></span></div>
       </div>
        <div class="form-group">
-        <label for="InputGalleryImageDescription">GalleryImage Description</label>
+        <label for="InputGalleryImageDescription">Gallery Image Description</label>
         <div class="input-group">
           <input type="text" class="form-control" id="InputGalleryImageDescription" name="InputGalleryImageDescription" placeholder="GalleryImage Description" required ng-model="galleryImage.description">
-          <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span></div>
+          <span class="input-group-addon"><i></i></span></div>
       </div>
       
-      <button ng-click="submitNews()">SUBMIT</button>
+      <button ng-click="submitNews()" class="btn btn-info pull-right">SUBMIT</button>
     </div>
 
     <script type="text/javascript">
         console.log("loginCtrl object", loginCtrl);
     </script>
-
   </form>
   <hr class="featurette-divider hidden-lg">
  
