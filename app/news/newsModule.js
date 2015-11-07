@@ -16,13 +16,18 @@ angular.module('newsModule', ['ngStorage'])
 .controller('NewsCtrl', [function () {
 	
 }])
-.controller('NewsDataCtrl', ['$scope','$http',function ($scope , $http , $localStorage) {
+.controller('NewsDataCtrl', ['$scope','$http','$localStorage', function ($scope , $http , $localStorage) {
 
   var baseUrl = "http://ec2-52-27-107-78.us-west-2.compute.amazonaws.com:8080"
            
     $scope.submitNews = function() {
 
          var newsData=$scope.news;
+         var galleryImage = $scope.galleryImage;  
+
+         var galleryImages = [galleryImage];
+         newsData.galleryImages = galleryImages;
+
          var accesstoken = $localStorage.access_token;
 
          console.log("access_token: " + accesstoken)
