@@ -1,6 +1,6 @@
 /*Angular Modules take a name, best practice is lowerCamelCase, and a list of dependancies*/
 /*added the second module as a dependancy */
-angular.module('mainApp', ['eventModule','ngRoute','ui.router'])
+angular.module('mainApp', ['newsModule','ngRoute','ui.router'])
 .config(['$urlRouterProvider','$stateProvider',
   function($urlRouterProvider,$stateProvider) {
 
@@ -13,12 +13,17 @@ angular.module('mainApp', ['eventModule','ngRoute','ui.router'])
 
         })
         
-        .state("contact", {
+        .state("login", {
 
           // Use a url of "/" to set a states as the "index".
-          url: "/contact",
-          templateUrl: 'contact.html'
+          url: "/login",
+          templateUrl: 'login.html'
 
+        })
+
+        .state("newsForm", {
+             url: "/newsForm",
+             templateUrl: 'newsForm.html'
         })
 
         $urlRouterProvider.when('', '/home');
