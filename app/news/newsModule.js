@@ -69,18 +69,6 @@ return{
    }
 
 }])
-.controller('NavCtrl', ['$scope', '$location' , '$localStorage' , '$window', '$ionicHistory' ,function($scope, $location, $localStorage, $window, $ionicHistory){
-
-      $scope.logout = function($scope) {
-
-                 $window.localStorage.clear();
-                 $ionicHistory.clearCache();
-                 $ionicHistory.clearHistory();
-
-       };
-  
-
-}])
 .controller('NewsDataCtrl', ['$scope','$http','$localStorage',function ($scope , $http , $localStorage) {
 
   var baseUrl = "http://ec2-52-27-107-78.us-west-2.compute.amazonaws.com:8080"

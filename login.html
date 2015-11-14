@@ -5,7 +5,7 @@
 <div class="row">
   <div class="col-md-12">
    </div>
-  <form  ng-controller="LoginCtrl" role="form" >
+  <form ng-controller="LoginCtrl" role="form" ng-hide="loggedIn()">
     <div class="col-lg-6">
      <h1 class="page-header">NewsApp Login</h1>
       <!--div class="well well-sm"><strong><i class="glyphicon glyphicon-ok form-control-feedback"></i> Required Field</strong></div-->
@@ -30,6 +30,8 @@
     </script>
 
   </form>
+
+  <p ng-show="loggedIn()"> You are already logged in</p>
   <hr class="featurette-divider hidden-lg">
  
 </div>
