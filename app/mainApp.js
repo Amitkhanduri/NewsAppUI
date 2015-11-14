@@ -40,6 +40,34 @@ angular.module('mainApp', ['newsModule','ngRoute','ui.router'])
 	
 	
 }])
-.controller('HomeCtrl', ['$scope', function ($scope) {
-	
-}])
+
+
+// .controller('HomeCtrl', ['NewsData', '$scope', function ($scope, $NewsData) {
+
+//   $scope.title = "These are the news:"
+
+//   $scope.getNews = function() {
+
+//      console.log("getNews called")
+//      var newsData=$scope.news;
+//      var galleryImage = $scope.galleryImage;  
+
+//      var galleryImages = [galleryImage];
+//      newsData.galleryImages = galleryImages;
+
+
+                 
+//      $http({
+//           method  : 'GET',
+//           url     :  baseUrl + '/news',   
+//           data    :  newsData,
+//           headers :  {'Content-Type': 'application/json'
+//                      }                             
+//            })
+//           .success(function(response) {
+//               NewsData.addNews(response.metadata, response.content)
+//               console.log("newsdata: " + NewsData.getNews());
+//           })
+//     } 
+
+// }])

@@ -2,7 +2,7 @@
 
 (function(){
 
-angular.module('newsModule', ['ngStorage'])
+angular.module('newsModule', ['ngStorage', 'angularUtils.directives.dirPagination'])
 .factory([function () {	
 
 }])
@@ -13,36 +13,67 @@ angular.module('newsModule', ['ngStorage'])
 .run([function () {
 	console.log("News Module::running");
 }])
+.factory('Constants', function() {
+  return {
+    getBaseUrl: function() {
+        var baseUrl = "http://ec2-52-27-107-78.us-west-2.compute.amazonaws.com:8080"
+        return baseUrl;
+    }
+  }
 
+  })
 .factory('Auth', function($localStorage){
 return{
     setAccessToken : function(the_access_token){
-        $localStorage.access_token = the_access_token;
+      $localStorage.access_token = the_access_token;
     },
     isLoggedIn : function(){
-      console.log("isLoggedIncalle");
       access_token = $localStorage.access_token
-        return(access_token)? true : false;
+      return(access_token)? true : false;
     },
     token : function() {
       access_token = $localStorage.access_token
-      console.log("token called: " + access_token);
-        return access_token
+      return access_token
     }, 
     logout : function() {
       $localStorage.access_token = null;
     }
   }
 })
-.controller('NewsCtrl', ['$scope', 'Auth', '$location',function ($scope, Auth ,$location) {
+.factory('NewsData', function() {
+  var pagination = { "numberOfPages" : 0, "perPage" : 5, "pageNumber" : 0};
+  var newsData = [];
+return{
+    
+    addNews : function(the_pagination, the_newsData) {
+        pagination = the_pagination;
+        newsData.push.apply(newsData, the_newsData)
+        // Array.prototype.push.apply(newsData, the_newsData); // http://stackoverflow.com/questions/351409/appending-to-array
 
-  console.log("scope in news controller: " + $scope)
+        console.log("setNews: pageNumber" + pagination.pageNumber)
+        console.log("setNews: perPage" + pagination.perPage)
+
+        console.log("setNews: numberOfPages" + pagination.numberOfPages)
+
+    },
+    getNews : function () {
+      return newsData;
+    },
+    getPagination : function () {
+      return pagination;
+    },
+
+    getTotalItems : function() {
+      totalItems = pagination.numberOfPages * pagination.perPage;
+      return totalItems;
+    }
+  }
+})
+.controller('NewsCtrl', ['$scope', 'Auth', '$location',function ($scope, Auth ,$location) {
   
 
 	$scope.loggedIn = Auth.isLoggedIn;
   $scope.token = Auth.token;
-
-  console.log("looggeinin in news controller: " + $scope.loggedIn())
 
    $scope.$watch(Auth.isLoggedIn, function (value, oldValue) {
 
@@ -69,11 +100,11 @@ return{
    }
 
 }])
-.controller('NewsDataCtrl', ['$scope','$http', 'Auth', function ($scope , $http, Auth ) {
+.controller('NewsDataCtrl', ['$scope','$http', 'Auth', 'NewsData', function ($scope , $http, Auth, NewsData ) {
 
   console.log("NewsDataCtrl scope: " + $scope)
 
-  var baseUrl = "http://ec2-52-27-107-78.us-west-2.compute.amazonaws.com:8080"
+  
            
     $scope.submitNews = function() {
 
@@ -102,36 +133,69 @@ return{
            })
     }
 
-    // $scope.getNews = function($scope) {
+       
+}])
 
+.controller("HomeCtrl", ["$scope", "NewsData", '$http', 'Constants', function ($scope, NewsData, $http, Constants) {
+//   $scope.title = "TITLE"
+// }])
+// .controller('HomeCtrl', ['NewsData', '$scope', function ($scope, $NewsData) {
 
-    //      var newsData=$scope.news;
-    //      var galleryImage = $scope.galleryImage;  
+  $scope.title = "These are the news:"
+  var baseUrl = Constants.getBaseUrl();
 
-    //      var galleryImages = [galleryImage];
-    //      newsData.galleryImages = galleryImages;
+  $scope.newsList = NewsData.getNews();  
+  $scope.perPage = NewsData.getPagination().perPage;
+  $scope.currentPage = NewsData.getPagination().pageNumber + 1
+  $scope.totalItems = NewsData.getTotalItems;
 
-    //      var accesstoken = $localStorage.access_token;
+  var myNewsList = $scope.newsList
+  console.log("newsList size: " + myNewsList.length )
 
-    //      console.log("access_token: " + accesstoken)
+  $scope.pageChanged = function(newPage) {
+    console.log("pageChanged: " + newPage)
+      getNews(newPage);
+  }
+
+  $scope.getNews = function(pageNumber) {
+
+     console.log("getNews called for page:" + pageNumber)
+     var newsData=$scope.news;
+     var galleryImage = $scope.galleryImage;  
+
+     var galleryImages = [galleryImage];
+     newsData.galleryImages = galleryImages;
+
 
                  
-    //  $http({
-    //       method  : 'GET',
-    //       url     :  baseUrl + '/news',   
-    //       data    :  newsData,
-    //       headers :  {'Content-Type': 'application/json',
-    //                   'Authorization': "Bearer " + accesstoken
-    //                  }                             
-    //        })
-    //       .success(function(response) {
+     $http({
+          method  : 'GET',
+          url     :  baseUrl + '/news', 
+          params  : {page_number: pageNumber, per_page: NewsData.getPagination().perPage}, 
+          data    :  newsData,
+          headers :  {'Content-Type': 'application/json'
+                     }                             
+           })
+          .success(function(response) {
+              
+              NewsData.addNews(response.metadata, response.content)
 
-    //       })
-    // }    
+              $scope.newsList = NewsData.getNews();  
+              $scope.perPage = NewsData.getPagination().numberOfPages;
+              $scope.currentPage = NewsData.getPagination().pageNumber + 1
+              $scope.totalItems = NewsData.getTotalItems;
+
+
+              console.log("newsdata: " + NewsData.getNews());
+              var length = $scope.newsList.length
+              console.log("newsList size after fetch: " + length  + "totalItems: " + $scope.totalItems())
+          })
+    } 
+
 }])
-.controller('LoginCtrl', ['$scope', '$http', '$location', "Auth" ,function ($scope, $http , $location , Auth ) {
+.controller('LoginCtrl', ['$scope', '$http', '$location', "Auth", "Constants" ,function ($scope, $http , $location , Auth, Constants ) {
 
-	var baseUrl = "http://ec2-52-27-107-78.us-west-2.compute.amazonaws.com:8080"
+	var baseUrl = Constants.getBaseUrl();
 
 	console.log("scope is: " + $scope)
 	$scope.submitLogin = function() {

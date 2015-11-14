@@ -1,10 +1,32 @@
-   <!-- Portfolio Item Heading -->
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Welcome To NewsApp!!
+   <!-- Home page-->
+        <div ng-controller="HomeCtrl">
+            <div class="col-lg-12" ng-controller="HomeCtrl" data-ng-init="getNews(0)" >
+                <h1 class="page-header">{{ title }}
                 </h1>
+
+
+                <div class="panel panel-default">
+	                <ul>
+	    				<li class="row" dir-paginate="news in newsList | itemsPerPage: 5" current-page="currentPage" total-items="totalItems()">{{ news.title }}</li>
+					</ul>
+				</div>
+            </div>
+            <div>
+            	<small>Pagination Controls</small>
+            	<div>
+            		Total items: {{ totalItems() }}
+            		Perpage = {{perPage}}
+            		Current page: {{ currentPage }}
+            	</div>
+	            <div class="text-center">
+	            	<dir-pagination-controls boundary-links="true" template-url="./app/dirPagination.tpl.html" on-pagechange="pageChanged(newPageNumber)"></dir-pagination-controls>
+	            </div>
+            </div>
+
+            <div>
+            	End of Page
             </div>
         </div>
-        <!-- /.row -->
+        <!-- /.Home page -->
 
  
