@@ -25,7 +25,6 @@ return{
         return(access_token)? true : false;
     },
     token : function() {
-      
       access_token = $localStorage.access_token
       console.log("token called: " + access_token);
         return access_token
@@ -35,7 +34,7 @@ return{
     }
   }
 })
-.controller('NewsCtrl', ['$scope', 'Auth', function ($scope, Auth) {
+.controller('NewsCtrl', ['$scope', 'Auth', '$location',function ($scope, Auth ,$location) {
 
   console.log("scope in news controller: " + $scope)
   
@@ -66,23 +65,29 @@ return{
    $scope.logoutClicked = function() {
     console.log("logout clicked");
       Auth.logout()
+      $location.url('/home');
    }
 
 }])
-.controller('NewsDataCtrl', ['$scope','$http','$localStorage',function ($scope , $http , $localStorage) {
+.controller('NewsDataCtrl', ['$scope','$http', 'Auth', function ($scope , $http, Auth ) {
+
+  console.log("NewsDataCtrl scope: " + $scope)
 
   var baseUrl = "http://ec2-52-27-107-78.us-west-2.compute.amazonaws.com:8080"
            
-    $scope.submitNews = function($scope) {
+    $scope.submitNews = function() {
 
+        console.log("sumitNews scope: " + $scope)
 
+         console.log("news in newsData: " + $scope.news)
+        
          var newsData=$scope.news;
          var galleryImage = $scope.galleryImage;  
 
          var galleryImages = [galleryImage];
          newsData.galleryImages = galleryImages;
 
-         var accesstoken = $localStorage.access_token;
+         var accesstoken = Auth.token();
 
          console.log("access_token: " + accesstoken)
 
@@ -95,7 +100,34 @@ return{
                       'Authorization': "Bearer " + accesstoken
                      }                             
            })
-    }  
+    }
+
+    // $scope.getNews = function($scope) {
+
+
+    //      var newsData=$scope.news;
+    //      var galleryImage = $scope.galleryImage;  
+
+    //      var galleryImages = [galleryImage];
+    //      newsData.galleryImages = galleryImages;
+
+    //      var accesstoken = $localStorage.access_token;
+
+    //      console.log("access_token: " + accesstoken)
+
+                 
+    //  $http({
+    //       method  : 'GET',
+    //       url     :  baseUrl + '/news',   
+    //       data    :  newsData,
+    //       headers :  {'Content-Type': 'application/json',
+    //                   'Authorization': "Bearer " + accesstoken
+    //                  }                             
+    //        })
+    //       .success(function(response) {
+
+    //       })
+    // }    
 }])
 .controller('LoginCtrl', ['$scope', '$http', '$location', "Auth" ,function ($scope, $http , $location , Auth ) {
 

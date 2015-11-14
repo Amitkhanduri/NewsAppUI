@@ -30,7 +30,7 @@
                     <li  ng-click="setIndex(0)"  ng-class="(index==0) ? 'active' : ''">
                       <a  ui-sref="home">Home</a>
                     </li>
-                    <li  ng-click="setIndex(1)"  ng-class="(index==1) ? 'active' : ''">
+                    <li  ng-click="setIndex(1)" ng-show="loggedIn()" ng-class="(index==1) ? 'active' : ''">
                       <a  ui-sref="newsForm">Add News</a>
                     </li>
                     <li ng-click="setIndex(2)" ng-hide="loggedIn()">
