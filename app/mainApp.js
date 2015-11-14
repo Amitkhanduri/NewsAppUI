@@ -22,9 +22,12 @@ angular.module('mainApp', ['newsModule','ngRoute','ui.router'])
         })
 
         .state("newsForm", {
+
              url: "/newsForm",
              templateUrl: 'newsForm.html'
         })
+
+      
 
         $urlRouterProvider.when('', '/home');
    

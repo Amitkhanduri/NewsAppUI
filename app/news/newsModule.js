@@ -13,14 +13,80 @@ angular.module('newsModule', ['ngStorage'])
 .run([function () {
 	console.log("News Module::running");
 }])
-.controller('NewsCtrl', [function () {
-	
+
+.factory('Auth', function($localStorage){
+return{
+    setAccessToken : function(the_access_token){
+        $localStorage.access_token = the_access_token;
+    },
+    isLoggedIn : function(){
+      console.log("isLoggedIncalle");
+      access_token = $localStorage.access_token
+        return(access_token)? true : false;
+    },
+    token : function() {
+      
+      access_token = $localStorage.access_token
+      console.log("token called: " + access_token);
+        return access_token
+    }, 
+    logout : function() {
+      $localStorage.access_token = null;
+    }
+  }
+})
+.controller('NewsCtrl', ['$scope', 'Auth', function ($scope, Auth) {
+
+  console.log("scope in news controller: " + $scope)
+  
+
+	$scope.loggedIn = Auth.isLoggedIn;
+  $scope.token = Auth.token;
+
+  console.log("looggeinin in news controller: " + $scope.loggedIn())
+
+   $scope.$watch(Auth.isLoggedIn, function (value, oldValue) {
+
+    //console("old logged in: " + oldValue + ", new " + value)
+
+    $scope.loggedIn = Auth.isLoggedIn
+    $scope.token = Auth.token
+
+    if(!value && oldValue) {
+      console.log("Disconnect as logged in is false");
+    }
+
+    if(value) {
+      console.log("Connect as loggedin is true");
+      //Do something when the user is connected
+    }
+
+  }, true);
+
+   $scope.logoutClicked = function() {
+    console.log("logout clicked");
+      Auth.logout()
+   }
+
 }])
-.controller('NewsDataCtrl', ['$scope','$http','$localStorage', function ($scope , $http , $localStorage) {
+.controller('NavCtrl', ['$scope', '$location' , '$localStorage' , '$window', '$ionicHistory' ,function($scope, $location, $localStorage, $window, $ionicHistory){
+
+      $scope.logout = function($scope) {
+
+                 $window.localStorage.clear();
+                 $ionicHistory.clearCache();
+                 $ionicHistory.clearHistory();
+
+       };
+  
+
+}])
+.controller('NewsDataCtrl', ['$scope','$http','$localStorage',function ($scope , $http , $localStorage) {
 
   var baseUrl = "http://ec2-52-27-107-78.us-west-2.compute.amazonaws.com:8080"
            
-    $scope.submitNews = function() {
+    $scope.submitNews = function($scope) {
+
 
          var newsData=$scope.news;
          var galleryImage = $scope.galleryImage;  
@@ -43,8 +109,7 @@ angular.module('newsModule', ['ngStorage'])
            })
     }  
 }])
-
-.controller('LoginCtrl', ['$scope', '$http', '$location', '$localStorage' ,function ($scope, $http , $location , $localStorage ) {
+.controller('LoginCtrl', ['$scope', '$http', '$location', "Auth" ,function ($scope, $http , $location , Auth ) {
 
 	var baseUrl = "http://ec2-52-27-107-78.us-west-2.compute.amazonaws.com:8080"
 
@@ -75,11 +140,8 @@ angular.module('newsModule', ['ngStorage'])
               } else {
                 //$scope.access_token = response.access_token;
                 //$scope.refresh_token = response.refresh_token;
-                 $localStorage.access_token = response.access_token;
-                 $localStorage.refresh_token = response.refresh_token;
+                Auth.setAccessToken(response.access_token)
                  $location.url('/newsForm');
-                 console.log("access_token: " + $localStorage.access_token,
-                	        "refresh_token: " + $localStorage.refresh_token)
               }
             })
             .error(function (data, status, headers, config) {

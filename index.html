@@ -21,7 +21,28 @@
 
 <body ng-app="mainApp" ng-controller="NewsCtrl as news">
 
-  <div ng-include src="'app/news/header.html'"></div>
+  <!-- <div ng-include src="app/news/header.html"></div> -->
+
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li  ng-click="setIndex(0)"  ng-class="(index==0) ? 'active' : ''">
+                      <a  ui-sref="home">Home</a>
+                    </li>
+                    <li ng-click="setIndex(1)" ng-hide="loggedIn()" ng-class="(index==1) ? 'active' : ''">
+                        <a ui-sref="login">Login</a>
+                    </li>
+                    <li ng-click="logoutClicked()" ng-show="loggedIn()" ng-class="(index==2) ? 'active' : ''">
+                        <a>Logout</a>
+                   </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
 
     <!-- Page Content -->
     <div class="container">
@@ -39,8 +60,8 @@
 
 
 <script type="text/javascript">
-    console.log("angular object",angular);
-    console.log("access token", access_token)
+    console.log("angular object", angular);
+    // console.log("access token in index.html", access_token)
 </script>
 </body>
 
