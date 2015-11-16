@@ -7,7 +7,7 @@
 
                 <div class="panel panel-default">
 	                <ul>
-	    				<li class="row" dir-paginate="news in newsList | itemsPerPage: 5" current-page="currentPage" total-items="totalItems()">{{ news.title }}</li>
+	    				<li class="row" dir-paginate="news in newsList() | itemsPerPage: 5" current-page="currentPage" total-items="totalItems()">{{ news.title }}</li>
 					</ul>
 				</div>
             </div>
@@ -19,7 +19,7 @@
             		Current page: {{ currentPage }}
             	</div>
 	            <div class="text-center">
-	            	<dir-pagination-controls boundary-links="true" template-url="./app/dirPagination.tpl.html" on-pagechange="pageChanged(newPageNumber)"></dir-pagination-controls>
+	            	<dir-pagination-controls boundary-links="true" template-url="./app/dirPagination.tpl.html" on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
 	            </div>
             </div>
 

@@ -47,7 +47,8 @@ return{
     
     addNews : function(the_pagination, the_newsData) {
         pagination = the_pagination;
-        newsData.push.apply(newsData, the_newsData)
+        newsData = the_newsData;
+        //newsData.push.apply(newsData, the_newsData)
         // Array.prototype.push.apply(newsData, the_newsData); // http://stackoverflow.com/questions/351409/appending-to-array
 
         console.log("setNews: pageNumber" + pagination.pageNumber)
@@ -144,17 +145,17 @@ return{
   $scope.title = "These are the news:"
   var baseUrl = Constants.getBaseUrl();
 
-  $scope.newsList = NewsData.getNews();  
+  $scope.newsList = NewsData.getNews;  
   $scope.perPage = NewsData.getPagination().perPage;
-  $scope.currentPage = NewsData.getPagination().pageNumber + 1
+  $scope.currentPage = NewsData.getPagination().pageNumber + 1;
   $scope.totalItems = NewsData.getTotalItems;
 
   var myNewsList = $scope.newsList
   console.log("newsList size: " + myNewsList.length )
 
   $scope.pageChanged = function(newPage) {
-    console.log("pageChanged: " + newPage)
-      getNews(newPage);
+    console.log("pageChanged: " + newPage - 1)
+    $scope.getNews(newPage - 1);
   }
 
   $scope.getNews = function(pageNumber) {
@@ -180,14 +181,15 @@ return{
               
               NewsData.addNews(response.metadata, response.content)
 
-              $scope.newsList = NewsData.getNews();  
+              $scope.newsList = NewsData.getNews;  
               $scope.perPage = NewsData.getPagination().numberOfPages;
-              $scope.currentPage = NewsData.getPagination().pageNumber + 1
+              $scope.currentPage = NewsData.getPagination().pageNumber + 1;
               $scope.totalItems = NewsData.getTotalItems;
 
 
-              console.log("newsdata: " + NewsData.getNews());
-              var length = $scope.newsList.length
+
+              console.log("newsdata: " + $scope.newsList());
+              var length = $scope.newsList().length
               console.log("newsList size after fetch: " + length  + "totalItems: " + $scope.totalItems())
           })
     } 
