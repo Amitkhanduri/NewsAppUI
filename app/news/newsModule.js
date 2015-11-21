@@ -106,17 +106,8 @@ return{
   console.log("NewsDataCtrl scope: " + $scope)
 
 
-     $scope.numberOfGalleryImages = 1 ;
-
-     $scope.range = function(i) {
-        return new Array(i);
-     };
-
-     $scope.addGalleryImageFields = function() {
-        return $scope.numberOfGalleryImages++;
-     };
+    $scope.numberOfGalleryImages = 1 ;
   
-           
     $scope.submitNews = function() {
 
         console.log("sumitNews scope: " + $scope)
@@ -145,6 +136,33 @@ return{
     }
 
        
+}])
+
+.directive('addInput', ['$compile', function ($compile) { // inject $compile service as dependency
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            // click on the button to add new input field
+            element.find('button').bind('click', function () {
+                // I'm using Angular syntax. Using jQuery will have the same effect
+                // Create input element
+
+                console.log("add input")
+
+
+                var input = angular.element('<div class="form-group"> <label for="InputGalleryImageUrl">Gallery Image URL</label><div class="input-group"> <input type="url" class="form-control" id="InputGalleryImageUrl" +  name="InputGalleryImageUrl" placeholder="GalleryImage URL" required ng-model="galleryImage.url"><span class="input-group-addon"><i></i></span></div></div><div class="form-group"><label for="InputGalleryImageDescription">Gallery Image Description</label><div class="input-group"><input type="text" class="form-control" id="InputGalleryImageDescription" name="InputGalleryImageDescription" placeholder="GalleryImage Description" required ng-model="galleryImage.description"><span class="input-group-addon"><i></i></span></div></div>');
+
+                // Compile the HTML and assign to scope
+                var compile = $compile(input)(scope);
+
+                // Append input to div
+               element.append(input);
+
+                // Increment the counter for the next input to be added
+                scope.numberOfGalleryImages++;
+            });
+        }
+    }
 }])
 
 .controller("HomeCtrl", ["$scope", "NewsData", '$http', 'Constants', function ($scope, NewsData, $http, Constants) {

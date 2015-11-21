@@ -57,20 +57,11 @@
           <input type="text" class="form-control" id="InputFeaturedImageDescription" name="InputFeaturedImageDescription" placeholder="FeaturedImage Description" required ng-model="news.featuredImage.description" >
           <span class="input-group-addon"><i></i></span></div>
       </div>
-      <button ng-click="addGalleryImageFields()" class="btn btn-info pull-right">add new galleryImage field</button>
+      <div add-input>
+        <button class="btn btn-info pull-right" id ="addGalleryImageButton">add new galleryImage field</button>
+      </div>
       <div ng-repeat="i in range(5) track by $index">
-       <div class="form-group">
-        <label for="InputGalleryImageUrl">Gallery Image URL</label>
-        <div class="input-group">
-          <input type="url" class="form-control" id="InputGalleryImageUrl" +  name="InputGalleryImageUrl" placeholder="GalleryImage URL" required ng-model="galleryImage.url">
-          <span class="input-group-addon"><i></i></span></div>
-      </div>
-       <div class="form-group">
-        <label for="InputGalleryImageDescription">Gallery Image Description</label>
-        <div class="input-group">
-          <input type="text" class="form-control" id="InputGalleryImageDescription" name="InputGalleryImageDescription" placeholder="GalleryImage Description" required ng-model="galleryImage.description">
-          <span class="input-group-addon"><i></i></span></div>
-      </div>
+      
      </div> 
       
       <button ng-click="submitNews()" class="btn btn-info pull-right">SUBMIT</button>
