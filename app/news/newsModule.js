@@ -168,7 +168,7 @@ return{
 // }])
 // .controller('HomeCtrl', ['NewsData', '$scope', function ($scope, $NewsData) {
 
-  $scope.title = "These are the news:"
+  $scope.title = "News:"
   var baseUrl = Constants.getBaseUrl();
 
   $scope.newsList = NewsData.getNews;  
