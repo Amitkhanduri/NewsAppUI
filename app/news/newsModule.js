@@ -43,7 +43,7 @@ return{
 .factory('NewsData', function() {
   var pagination = { "numberOfPages" : 0, "perPage" : 5, "pageNumber" : 0};
   var newsData = [];
-return{
+  return {
     
     addNews : function(the_pagination, the_newsData) {
         pagination = the_pagination;
@@ -105,6 +105,16 @@ return{
 
   console.log("NewsDataCtrl scope: " + $scope)
 
+
+     $scope.numberOfGalleryImages = 1 ;
+
+     $scope.range = function(i) {
+        return new Array(i);
+     };
+
+     $scope.addGalleryImageFields = function() {
+        return $scope.numberOfGalleryImages++;
+     };
   
            
     $scope.submitNews = function() {
