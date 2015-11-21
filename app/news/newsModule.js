@@ -101,12 +101,13 @@ return{
    }
 
 }])
-.controller('NewsDataCtrl', ['$scope','$http', 'Auth', 'NewsData', function ($scope , $http, Auth, NewsData ) {
+.controller('NewsDataCtrl', ['$scope','$http', 'Auth', 'NewsData', 'Constants', function ($scope , $http, Auth, NewsData, Constants ) {
 
   console.log("NewsDataCtrl scope: " + $scope)
+  var baseUrl = Constants.getBaseUrl();
+  console.log("Base url: " + baseUrl);
 
-
-    $scope.numberOfGalleryImages = 1 ;
+    $scope.numberOfGalleryImages = 0 ;
   
     $scope.submitNews = function() {
 
@@ -115,10 +116,7 @@ return{
          console.log("news in newsData: " + $scope.news)
         
          var newsData=$scope.news;
-         var galleryImage = $scope.galleryImage;  
-
-         var galleryImages = [galleryImage];
-         newsData.galleryImages = galleryImages;
+       
 
          var accesstoken = Auth.token();
 
@@ -150,13 +148,13 @@ return{
                 console.log("add input")
 
 
-                var input = angular.element('<div class="form-group"> <label for="InputGalleryImageUrl">Gallery Image URL</label><div class="input-group"> <input type="url" class="form-control" id="InputGalleryImageUrl" +  name="InputGalleryImageUrl" placeholder="GalleryImage URL" required ng-model="galleryImage.url"><span class="input-group-addon"><i></i></span></div></div><div class="form-group"><label for="InputGalleryImageDescription">Gallery Image Description</label><div class="input-group"><input type="text" class="form-control" id="InputGalleryImageDescription" name="InputGalleryImageDescription" placeholder="GalleryImage Description" required ng-model="galleryImage.description"><span class="input-group-addon"><i></i></span></div></div>');
+                var input = angular.element('<div class="form-group"> <label for="InputGalleryImageUrl">Gallery Image URL</label><div class="input-group"> <input type="url" class="form-control" id="InputGalleryImageUrl" +  name="InputGalleryImageUrl" placeholder="GalleryImage URL" required ng-model="news.galleryImages[' + scope.numberOfGalleryImages + '].url"><span class="input-group-addon"><i></i></span></div></div><div class="form-group"><label for="InputGalleryImageDescription">Gallery Image Description</label><div class="input-group"><input type="text" class="form-control" id="InputGalleryImageDescription" name="InputGalleryImageDescription" placeholder="GalleryImage Description" required ng-model="news.galleryImages[' + scope.numberOfGalleryImages + '].description"><span class="input-group-addon"><i></i></span></div></div>');
 
                 // Compile the HTML and assign to scope
                 var compile = $compile(input)(scope);
 
                 // Append input to div
-               element.append(input);
+                element.append(input);
 
                 // Increment the counter for the next input to be added
                 scope.numberOfGalleryImages++;
