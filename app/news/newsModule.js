@@ -163,10 +163,7 @@ return{
     }
 }])
 
-.controller("HomeCtrl", ["$scope", "NewsData", '$http', 'Constants', function ($scope, NewsData, $http, Constants) {
-//   $scope.title = "TITLE"
-// }])
-// .controller('HomeCtrl', ['NewsData', '$scope', function ($scope, $NewsData) {
+.controller("HomeCtrl", ["$scope", "NewsData", '$http', 'Constants', '$location',function ($scope, NewsData, $http, Constants, $location) {
 
   $scope.title = "News:"
   var baseUrl = Constants.getBaseUrl();
@@ -213,12 +210,30 @@ return{
               $scope.totalItems = NewsData.getTotalItems;
 
 
-
               console.log("newsdata: " + $scope.newsList());
               var length = $scope.newsList().length
               console.log("newsList size after fetch: " + length  + "totalItems: " + $scope.totalItems())
           })
-    } 
+    };
+
+     $scope.editNews = function() {
+      
+      $location.url('/newsFormUpdate');   
+
+     };
+
+     $scope.updateNews = function() {
+
+         $http({
+                method : 'PUT',
+                url    :  baseUrl + '/news/{id}',
+                headers :  {'Content-Type': 'application/json',
+                           'Authorization': "Bearer " + accesstoken
+                           } 
+
+
+         })           
+     }
 
 }])
 .controller('LoginCtrl', ['$scope', '$http', '$location', "Auth", "Constants" ,function ($scope, $http , $location , Auth, Constants ) {
