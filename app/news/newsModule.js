@@ -26,7 +26,7 @@ angular.module('newsModule', ['ngStorage', 'angularUtils.directives.dirPaginatio
 return{
     setAccessToken : function(the_access_token){
       $localStorage.access_token = the_access_token;
-    },
+    }, 
     isLoggedIn : function(){
       access_token = $localStorage.access_token
       return(access_token)? true : false;
@@ -70,6 +70,20 @@ return{
     }
   }
 })
+.factory('myService', function(){
+
+      var savedData = {}
+      function set(data) {
+           savedData = data;
+      }
+      function get() {
+         return savedData
+     }
+       return {
+            set: set,
+            get: get
+       }  
+})
 .controller('NewsCtrl', ['$scope', 'Auth', '$location',function ($scope, Auth ,$location) {
   
 
@@ -77,8 +91,6 @@ return{
   $scope.token = Auth.token;
 
    $scope.$watch(Auth.isLoggedIn, function (value, oldValue) {
-
-    //console("old logged in: " + oldValue + ", new " + value)
 
     $scope.loggedIn = Auth.isLoggedIn
     $scope.token = Auth.token
@@ -103,15 +115,15 @@ return{
 }])
 .controller('NewsDataCtrl', ['$scope','$http', 'Auth', 'NewsData', 'Constants', function ($scope , $http, Auth, NewsData, Constants ) {
 
-  console.log("NewsDataCtrl scope: " + $scope)
-  var baseUrl = Constants.getBaseUrl();
-  console.log("Base url: " + baseUrl);
+     console.log("NewsDataCtrl scope: " + $scope)
+     var baseUrl = Constants.getBaseUrl();
+     console.log("Base url: " + baseUrl);
 
-    $scope.numberOfGalleryImages = 0 ;
+     $scope.numberOfGalleryImages = 0 ;
   
-    $scope.submitNews = function() {
+     $scope.submitNews = function() {
 
-        console.log("sumitNews scope: " + $scope)
+         console.log("sumitNews scope: " + $scope)
 
          console.log("news in newsData: " + $scope.news)
         
@@ -131,9 +143,8 @@ return{
                       'Authorization': "Bearer " + accesstoken
                      }                             
            })
-    }
-
-       
+     }
+   
 }])
 
 .directive('addInput', ['$compile', function ($compile) { // inject $compile service as dependency
@@ -163,33 +174,32 @@ return{
     }
 }])
 
-.controller("HomeCtrl", ["$scope", "NewsData", '$http', 'Constants', '$location',function ($scope, NewsData, $http, Constants, $location) {
+.controller("HomeCtrl", ["$scope", 'NewsData', '$http', 'Constants', '$location', 'myService', function ($scope, NewsData, $http, Constants, $location, myService ) {
 
-  $scope.title = "News:"
-  var baseUrl = Constants.getBaseUrl();
+       $scope.title = "News:"
+       var baseUrl = Constants.getBaseUrl();
 
-  $scope.newsList = NewsData.getNews;  
-  $scope.perPage = NewsData.getPagination().perPage;
-  $scope.currentPage = NewsData.getPagination().pageNumber + 1;
-  $scope.totalItems = NewsData.getTotalItems;
+       $scope.newsList = NewsData.getNews;  
+       $scope.perPage = NewsData.getPagination().perPage;
+       $scope.currentPage = NewsData.getPagination().pageNumber + 1;
+       $scope.totalItems = NewsData.getTotalItems;
 
-  var myNewsList = $scope.newsList
-  console.log("newsList size: " + myNewsList.length )
+       var myNewsList = $scope.newsList
+       console.log("newsList size: " + myNewsList.length )
 
-  $scope.pageChanged = function(newPage) {
-    console.log("pageChanged: " + newPage - 1)
-    $scope.getNews(newPage - 1);
-  }
+       $scope.pageChanged = function(newPage) {
+       console.log("pageChanged: " + newPage - 1)
+       $scope.getNews(newPage - 1);
+       }
 
-  $scope.getNews = function(pageNumber) {
+       $scope.getNews = function(pageNumber) {
 
-     console.log("getNews called for page:" + pageNumber)
-     var newsData=$scope.news;
-     var galleryImage = $scope.galleryImage;  
+       console.log("getNews called for page:" + pageNumber)
+       var newsData=$scope.news;
+       var galleryImage = $scope.galleryImage;  
 
-     var galleryImages = [galleryImage];
-     newsData.galleryImages = galleryImages;
-
+       var galleryImages = [galleryImage];
+       newsData.galleryImages = galleryImages;
 
                  
      $http({
@@ -207,7 +217,7 @@ return{
               $scope.newsList = NewsData.getNews;  
               $scope.perPage = NewsData.getPagination().numberOfPages;
               $scope.currentPage = NewsData.getPagination().pageNumber + 1;
-              $scope.totalItems = NewsData.getTotalItems;
+              $scope.totalItems = NewsData.getTotalItems; 
 
 
               console.log("newsdata: " + $scope.newsList());
@@ -216,34 +226,42 @@ return{
           })
     };
 
-     $scope.editNews = function() {
-      
-      $location.url('/newsFormUpdate');   
+     $scope.editNews = function(number) {
+
+     myService.set(NewsData.getNews()[number]);
+     $location.url('/newsFormUpdate');    
 
      };
 
-     $scope.updateNews = function() {
-
-         $http({
-                method : 'PUT',
-                url    :  baseUrl + '/news/{id}',
-                headers :  {'Content-Type': 'application/json',
-                           'Authorization': "Bearer " + accesstoken
-                           } 
-
-
-         })           
-     }
-
 }])
-.controller('LoginCtrl', ['$scope', '$http', '$location', "Auth", "Constants" ,function ($scope, $http , $location , Auth, Constants ) {
+.controller('UpdateCtrl', ['$scope', '$http', 'Auth','NewsData', 'Constants' , 'myService' , function ($scope, NewsData, $http, Auth, Constants ,myService) {
 
-	var baseUrl = Constants.getBaseUrl();
+    var baseUrl = Constants.getBaseUrl();
+    $scope.newsFormUpdate = myService.get();
+    var formdata = myService.get();
 
-	console.log("scope is: " + $scope)
-	$scope.submitLogin = function() {
+    $scope.updateNews = function() {
 
-		console.log('in submitLogin');
+      var accesstoken = Auth.token();
+
+      $http({
+              method : 'PUT',
+              url    :  baseUrl + '/news/{id}',
+              data    : 'formdata',   
+              headers :  {'Content-Type': 'application/json',
+                          'Authorization': "Bearer " + accesstoken
+                         }
+            })           
+      }  
+}])
+.controller('LoginCtrl', ['$scope', '$http', '$location', 'Auth', 'Constants' ,function ($scope, $http , $location , Auth, Constants ) {
+
+	   var baseUrl = Constants.getBaseUrl();
+
+	   console.log("scope is: " + $scope)
+	   $scope.submitLogin = function() {
+
+		 console.log('in submitLogin');
 
   		var formdata = "username=" + $scope.user.username + "&password=" + $scope.user.password + "&grant_type=password&scope=read+write&client_secret=123456&client_id=clientapp";
   		
@@ -277,6 +295,6 @@ return{
             });
           };
 	
-}])
+     }])
 
 })();
