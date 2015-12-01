@@ -70,19 +70,21 @@ return{
     }
   }
 })
-.factory('myService', function(){
+.factory('serviceSharedData', function() {
 
       var savedData = {}
       function set(data) {
-           savedData = data;
+       savedData = data;
       }
-      function get() {
-         return savedData
-     }
-       return {
-            set: set,
-            get: get
-       }  
+         function get() {
+           return savedData;
+       }
+
+          return {
+             set: set,
+             get: get
+    }
+       
 })
 .controller('NewsCtrl', ['$scope', 'Auth', '$location',function ($scope, Auth ,$location) {
   
@@ -174,7 +176,7 @@ return{
     }
 }])
 
-.controller("HomeCtrl", ["$scope", 'NewsData', '$http', 'Constants', '$location', 'myService', function ($scope, NewsData, $http, Constants, $location, myService ) {
+.controller("HomeCtrl", ["$scope", 'NewsData', '$http', 'Constants', '$location', 'serviceSharedData', function ($scope, NewsData, $http, Constants, $location, serviceSharedData ) {
 
        $scope.title = "News:"
        var baseUrl = Constants.getBaseUrl();
@@ -226,28 +228,32 @@ return{
           })
     };
 
-     $scope.editNews = function(number) {
+      $scope.editNews = function (news) {
 
-     myService.set(NewsData.getNews()[number]);
-     $location.url('/newsFormUpdate');    
+          serviceSharedData.set(news);
 
-     };
+          $location.url('/newsFormUpdate');
+
+
+      };
 
 }])
-.controller('UpdateCtrl', ['$scope', '$http', 'Auth','NewsData', 'Constants' , 'myService' , function ($scope, NewsData, $http, Auth, Constants ,myService) {
+.controller('UpdateCtrl', ['$scope', '$http', 'Auth', 'Constants' , 'serviceSharedData' , function ($scope, $http, Auth, Constants ,serviceSharedData) {
 
     var baseUrl = Constants.getBaseUrl();
-    $scope.newsFormUpdate = myService.get();
-    var formdata = myService.get();
-
+   
+     $scope.sharedData = serviceSharedData.get();
+ 
     $scope.updateNews = function() {
+
+      var formdata=$scope.sharedData;
 
       var accesstoken = Auth.token();
 
       $http({
               method : 'PUT',
               url    :  baseUrl + '/news/{id}',
-              data    : 'formdata',   
+              data    : formdata,   
               headers :  {'Content-Type': 'application/json',
                           'Authorization': "Bearer " + accesstoken
                          }

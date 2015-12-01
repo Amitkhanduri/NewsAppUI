@@ -5,7 +5,7 @@
 
                 <div class="bs-component" >
                         <ul >
-                           <li dir-paginate="news in newsList() | itemsPerPage:perPage" current-page="currentPage" total-items="totalItems()">
+                           <li dir-paginate="news in newsList() | itemsPerPage:perPage" ng-model="news" current-page="currentPage" total-items="totalItems()">
                             <h3>{{news.title}}</h3>
                             <p>{{news.shortDescription}}</p>
                             <p>{{news.body}}</p>
@@ -16,7 +16,7 @@
                             
                             <p>Date : {{news.date}}</p> 
                             <div>
-                                <button ng-click="editNews()" ng-show="loggedIn()" class="btn btn-info pull-right">Edit</button>
+                                <button ng-click="editNews(news)" ng-model="news" ng-show="loggedIn()" class="btn btn-info pull-right">Edit</button>
                             </div>
                             </li>
                         </ul>

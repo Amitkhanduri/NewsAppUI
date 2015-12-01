@@ -5,55 +5,54 @@
    </div>
   <form   role="form" ng-show="loggedIn()">
     <div class="col-lg-6">
-
+<!--     <p>{{ sharedData}}</p> -->
       <h1 class="page-header">NewsFormUpdate</h1>
-      <!--div class="well well-sm"><strong><i class="glyphicon glyphicon-ok form-control-feedback"></i> Required Field</strong></div-->
       <div class="form-group">
         <label for="InputTitle">Title</label>
         <div class="input-group">
-          <input type="text" class="form-control" name="InputTitle" id="InputTitle" placeholder="Title" required ng-model="news.title">
+          <input type="text" class="form-control" name="InputTitle" id="InputTitle" placeholder="Title" required ng-model="sharedData.title">
           <span class="input-group-addon"><i></i></span></div>
       </div>
       <div class="form-group">
         <label for="InputShortDescription">Short Description</label>
         <div class="input-group">
-          <input type="text" class="form-control" id="InputShortDescription" name="InputShortDescription" placeholder="Short Description" required ng-model="news.shortDescription" >
+          <input type="text" class="form-control" id="InputShortDescription" name="InputShortDescription" placeholder="Short Description" required ng-model="sharedData.shortDescription" >
           <span class="input-group-addon"><i></i></span></div>
       </div>
        <div class="form-group">
         <label for="InputBody">Body</label>
         <div class="input-group">
-          <input type="text" class="form-control" id="InputBody" name="InputBody" placeholder="News Body" required ng-model="news.body" >
+          <input type="text" class="form-control" id="InputBody" name="InputBody" placeholder="News Body" required ng-model="sharedData.body" >
           <span class="input-group-addon"><i></i></span></div>
       </div>
       <div class="form-group">
         <label for="InputSourceUrl">Source URL</label>
         <div class="input-group">
-          <input type="url" class="form-control" id="InputSourceUrl" name="InputSourceUrl" placeholder="Source URL" required ng-model="news.sourceUrl" >
+          <input type="url" class="form-control" id="InputSourceUrl" name="InputSourceUrl" placeholder="Source URL" required ng-model="sharedData.sourceUrl" >
           <span class="input-group-addon"><i></i></span></div>
       </div>
       <div class="form-group">
         <label for="InputVideoUrl">Video URL</label>
         <div class="input-group">
-          <input type="url" class="form-control" id="InputVideoUrl" name="InputVideoUrl" placeholder="Video URL" required ng-model="news.videoUrl" >
+          <input type="url" class="form-control" id="InputVideoUrl" name="InputVideoUrl" placeholder="Video URL" required ng-model="sharedData.videoUrl" >
           <span class="input-group-addon"><i></i></span></div>
       </div>
       <div class="form-group">
         <label for="InputCategoryName">Category Name</label>
         <div class="input-group">
-          <input type="text" class="form-control" id="InputCategoryName" name="InputCategoryName" placeholder="Category Name" required ng-model="news.category.name" >
+          <input type="text" class="form-control" id="InputCategoryName" name="InputCategoryName" placeholder="Category Name" required ng-model="sharedData.category.name" >
           <span class="input-group-addon"><i></i></span></div>
       </div>
       <div class="form-group">
         <label for="InputFeaturedImageUrl">Featured Image URL</label>
         <div class="input-group">
-          <input type="url" class="form-control" id="InputFeaturedImageUrl" name="InputFeaturedImageUrl" placeholder="FeaturedImage URL" required ng-model="news.featuredImage.url" >
+          <input type="url" class="form-control" id="InputFeaturedImageUrl" name="InputFeaturedImageUrl" placeholder="FeaturedImage URL" required ng-model="sharedData.featuredImage.url" >
           <span class="input-group-addon"><i></i></span></div>
       </div>
        <div class="form-group">
         <label for="InputFeaturedImageDescription">Featured Image Description</label>
         <div class="input-group">
-          <input type="text" class="form-control" id="InputFeaturedImageDescription" name="InputFeaturedImageDescription" placeholder="FeaturedImage Description" required ng-model="news.featuredImage.description" >
+          <input type="text" class="form-control" id="InputFeaturedImageDescription" name="InputFeaturedImageDescription" placeholder="FeaturedImage Description" required ng-model="sharedData.featuredImage.description" >
           <span class="input-group-addon"><i></i></span></div>
       </div>
       <div add-input>
