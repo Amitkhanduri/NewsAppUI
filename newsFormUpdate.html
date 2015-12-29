@@ -1,14 +1,11 @@
 
-
-  <div class="container">
-<div class="row" ng-controller="NewsDataCtrl">
+  <div class="UpdateCtrl">
+<div class="row" ng-controller="UpdateCtrl">
   <div class="col-md-12">
    </div>
   <form   role="form" ng-show="loggedIn()">
     <div class="col-lg-6">
-
-      <h1 class="page-header">NewsForm</h1>
-      <!--div class="well well-sm"><strong><i class="glyphicon glyphicon-ok form-control-feedback"></i> Required Field</strong></div-->
+      <h1 class="page-header">NewsFormUpdate</h1>
       <div class="form-group">
         <label for="InputTitle">Title</label>
         <div class="input-group">
@@ -56,15 +53,11 @@
         <div class="input-group">
           <input type="text" class="form-control" id="InputFeaturedImageDescription" name="InputFeaturedImageDescription" placeholder="FeaturedImage Description" required ng-model="news.featuredImage.description" >
           <span class="input-group-addon"><i></i></span></div>
-      </div>
-      <div add-input>
-        <button class="btn btn-info pull-right glyphicon glyphicon-plus" id ="addGalleryImageButton">ADD GALLERY IMAGE</button>
-      </div>
-      <div ng-repeat="i in range(5) track by $index">
+       <div ng-repeat="data in repeatData">
+            {{data.data}} {{data.value}}
+       </div>
       
-     </div> 
-      
-      <button ng-click="submitNews()" class="btn btn-info pull-right glyphicon glyphicon-save">SUBMIT</button>
+      <button ng-click="updateNews()" class="btn btn-info pull-right glyphicon glyphicon-save">UPDATE</button>
     </div>
 
     <script type="text/javascript">
@@ -72,7 +65,5 @@
     </script>
   </form>
   <hr class="featurette-divider hidden-lg">
- 
 </div>
-
 </div>

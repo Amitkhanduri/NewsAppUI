@@ -5,8 +5,9 @@
 <div class="row">
   <div class="col-md-12">
    </div>
-  <form  ng-controller="LoginCtrl" role="form" >
+  <form ng-controller="LoginCtrl" role="form" ng-hide="loggedIn()">
     <div class="col-lg-6">
+     <h1 class="page-header">NewsApp Login</h1>
       <!--div class="well well-sm"><strong><i class="glyphicon glyphicon-ok form-control-feedback"></i> Required Field</strong></div-->
       <div class="form-group">
         <label for="InputUsername">Username</label>
@@ -29,6 +30,10 @@
     </script>
 
   </form>
+
+  <p ng-show="loggedIn()" class="alert alert-success">
+    <strong>Success!</strong> This alert box could indicate a successful or positive action.
+  You are already logged in</p>
   <hr class="featurette-divider hidden-lg">
  
 </div>
