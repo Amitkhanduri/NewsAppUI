@@ -28,16 +28,16 @@
                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li  ng-click="setIndex(0)"  ng-class="(index==0) ? 'active' : ''">
-                      <a  ui-sref="home">Home</a>
+                      <a  ui-sref="home" class="glyphicon glyphicon-header">ome</a>
                     </li>
                     <li  ng-click="setIndex(1)" ng-show="loggedIn()" ng-class="(index==1) ? 'active' : ''">
-                      <a  ui-sref="newsForm">Add News</a>
+                      <a  ui-sref="newsForm" class="glyphicon glyphicon-plus">AddNews</a>
                     </li>
                     <li ng-click="setIndex(2)" ng-hide="loggedIn()">
-                        <a ui-sref="login">Login</a>
+                        <a ui-sref="login" class="glyphicon glyphicon-log-in">Login</a>
                     </li>
                     <li ng-click="logoutClicked()" ng-show="loggedIn()">
-                        <a>Logout</a>
+                        <a class="glyphicon glyphicon-log-out">Logout</a>
                    </li>
                 </ul>
             </div>

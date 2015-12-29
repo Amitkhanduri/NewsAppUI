@@ -129,8 +129,7 @@ return{
 
          console.log("news in newsData: " + $scope.news)
         
-         var newsData=$scope.news;
-       
+         var newsData=$scope.news;     
 
          var accesstoken = Auth.token();
 
@@ -148,7 +147,6 @@ return{
      }
    
 }])
-
 .directive('addInput', ['$compile', function ($compile) { // inject $compile service as dependency
     return {
         restrict: 'A',
@@ -175,7 +173,6 @@ return{
         }
     }
 }])
-
 .controller("HomeCtrl", ["$scope", 'NewsData', '$http', 'Constants', '$location', 'serviceSharedData', function ($scope, NewsData, $http, Constants, $location, serviceSharedData ) {
 
        $scope.title = "News:"
@@ -199,7 +196,7 @@ return{
        console.log("getNews called for page:" + pageNumber)
        var newsData=$scope.news;
        var galleryImage = $scope.galleryImage;  
-
+       
        var galleryImages = [galleryImage];
        newsData.galleryImages = galleryImages;
 
@@ -228,32 +225,48 @@ return{
           })
     };
 
+  $scope.$watch('searchStr', function (search)
+    {
+      console.log(search);
+      if (!search || search.length == 0)
+        return 0;
+        // if searchStr is still the same..
+        // go ahead and retrieve the data
+        if (search === $scope.searchStr)
+        {
+          $http.get("http://ec2-52-27-107-78.us-west-2.compute.amazonaws.com:8080/news?search=" + search).success(function(data) {
+         
+            $scope.responseData = data; 
+
+          });
+        }
+    });
+
       $scope.editNews = function (news) {
 
-          serviceSharedData.set(news);
+        serviceSharedData.set(news);
 
-          $location.url('/newsFormUpdate');
+        $location.url('/newsFormUpdate');
 
-
-      };
+      }
 
 }])
-.controller('UpdateCtrl', ['$scope', '$http', 'Auth', 'Constants' , 'serviceSharedData' , function ($scope, $http, Auth, Constants ,serviceSharedData) {
+.controller('UpdateCtrl', ['$scope', '$http','Auth', 'Constants' , 'serviceSharedData' , function ($scope, $http, Auth, Constants ,serviceSharedData) {
 
     var baseUrl = Constants.getBaseUrl();
-   
-     $scope.sharedData = serviceSharedData.get();
- 
-    $scope.updateNews = function() {
 
-      var formdata=$scope.sharedData;
+     $scope.news = serviceSharedData.get();
+
+     $scope.updateNews = function() {
+
+      var updatedNews = $scope.news;
 
       var accesstoken = Auth.token();
 
       $http({
               method : 'PUT',
               url    :  baseUrl + '/news/{id}',
-              data    : formdata,   
+              data    : updatedNews,   
               headers :  {'Content-Type': 'application/json',
                           'Authorization': "Bearer " + accesstoken
                          }
@@ -274,7 +287,7 @@ return{
   		 $http({
             method  : 'POST',
             url     : baseUrl + '/oauth/token',
-            data    : formdata, //forms user object
+            data    : formdata,
             headers : {'Content-Type': 'application/x-www-form-urlencoded',
                           'Authorization' : "Basic Y2xpZW50YXBwOjEyMzQ1Ng==",
                           'Accept' : 'application/json'
@@ -292,7 +305,7 @@ return{
                 //$scope.access_token = response.access_token;
                 //$scope.refresh_token = response.refresh_token;
                 Auth.setAccessToken(response.access_token)
-                 $location.url('/newsForm');
+                 $location.url('/home');
               }
             })
             .error(function (data, status, headers, config) {

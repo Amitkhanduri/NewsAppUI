@@ -1,23 +1,24 @@
 <div ng-controller="HomeCtrl">
             <div  data-ng-init="getNews(0)" >
                 <h1 class="page-header">{{ title }}
-                </h1>
-
+            </h1>
+         <input type="text" data-ng-model="searchStr" ng-model-options="{debounce: 1000}">
+         <br>
+         <p>{{responseData }}</p>
                 <div class="bs-component" >
-                        <ul >
+                        <ul>
                            <li dir-paginate="news in newsList() | itemsPerPage:perPage" ng-model="news" current-page="currentPage" total-items="totalItems()">
-                            <h3>{{news.title}}</h3>
+                            <h3 class="glyphicon glyphicon-hand-right">{{ news.title }}</h3>
                             <p>{{news.shortDescription}}</p>
                             <p>{{news.body}}</p>
-                            <p>News Source: <a src='{{news.sourceUrl}}'>{{news.sourceUrl}}</a></p>
-                            <p>News Video: <a src='{{news.videoUrl}}'>{{news.videoUrl}}</a></p>
+                             <div>
+                                <button ng-click="editNews(news)" ng-model="news" ng-show="loggedIn()" class="btn btn-info pull-right glyphicon glyphicon-edit">EDIT</button>
+                            </div>
+                            <p>News Source: <a href="{{news.sourceUrl}}">{{news.sourceUrl}}</a></p>
+                            <p>News Video: <a href="{{news.videoUrl}}">{{news.videoUrl}}</a></p>
                             <p>Category: {{news.category.name}}</p>
                             <p>Author: {{news.author.name}}</p>
-                            
                             <p>Date : {{news.date}}</p> 
-                            <div>
-                                <button ng-click="editNews(news)" ng-model="news" ng-show="loggedIn()" class="btn btn-info pull-right">Edit</button>
-                            </div>
                             </li>
                         </ul>
                 </div>
