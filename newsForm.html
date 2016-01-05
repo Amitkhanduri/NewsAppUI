@@ -1,15 +1,95 @@
+<div class="container" ng-controller="NewsDataCtrl">
+<div class="row row-content">
+  <h1 class="page-header">NewsForm</h1>
+   <form class="form-horizontal" name="NewsDataForm" ng-click="submitNews()" novalidata="" ng-show="loggedIn()">
+     <div class="form-group" ng-class="{ 'has-error' : NewsDataForm.title.$error.required && !NewsDataForm.title.$pristine }">
+         <label for="title" class="col-sm-3 control-label">Title</label>
+          <div class="col-sm-9">
+          <textarea  rows="2" class="form-control" id="title" name="title" placeholder="Enter Title Of The News" ng-model="news.title" required></textarea>
+           <span ng-show="NewsDataForm.title.$error.required && !NewsDataForm.title.$pristine" class="help-block">Title is Required</span>
+         </div>
+      </div> 
+        <div class="form-group" ng-class="{ 'has-error' : NewsDataForm.shortDescription.$error.required && !NewsDataForm.shortDescription.$pristine }">
+         <label for="shortDescription" class="col-sm-3 control-label">ShortDescription</label>
+          <div class="col-sm-9">
+          <textarea rows="4" class="form-control" id="shortDescription" name="shortDescription" placeholder="Enter ShortDescription Of The News" ng-model="news.shortDescription" required ></textarea>
+           <span ng-show="NewsDataForm.shortDescription.$error.required && !NewsDataForm.shortDescription.$pristine" class="help-block">ShortDescription is Required</span>
+         </div>
+      </div>
+        <div class="form-group" ng-class="{ 'has-error' : NewsDataForm.body.$error.required && !NewsDataForm.body.$pristine }">
+         <label for="body" class="col-sm-3 control-label">Body</label>
+          <div class="col-sm-9">
+          <textarea rows="12" class="form-control" id="body" name="shortDescription" placeholder="Enter Body Of The News" ng-model="news.body" required ></textarea>
+           <span ng-show="NewsDataForm.body.$error.required && !NewsDataForm.body.$pristine" class="help-block">Body is Required</span>
+         </div>
+      </div>
+       <div class="form-group" ng-class="{ 'has-error' : NewsDataForm.sourceUrl.$error.required && !NewsDataForm.sourceUrl.$pristine }">
+         <label for="sourceUrl" class="col-sm-3 control-label">SourceURL</label>
+          <div class="col-sm-9">
+          <input type="url" class="form-control" id="videoUrl" name="sourceurl" placeholder="Enter SourceURL Of The News" ng-model="news.sourceUrl" required>
+           <span ng-show="NewsDataForm.sourceUrl.$error.required && !NewsDataForm.sourceUrl.$pristine" class="help-block">SourceURL is Required</span>
+         </div>
+      </div>
+        <div class="form-group" ng-class="{ 'has-error' : NewsDataForm.videoUrl.$error.required && !NewsDataForm.videoUrl.$pristine }">
+         <label for="videoUrl" class="col-sm-3 control-label">VideoURL</label>
+          <div class="col-sm-9">
+          <input type="url" class="form-control" id="videoUrl" name="videourl" placeholder="Enter VideoURL Of The News" ng-model="news.videoeUrl">
+         </div>
+      </div>    
+       <div class="form-group" ng-class="{ 'has-error' : NewsDataForm.category.$error.required && !NewsDataForm.category.$pristine }">
+           <label for="category" class="col-sm-3 control-label">Category</label>
+             <div class="col-sm-9">
+               <label class="radio-inline">
+                 <input  type="radio" id="world" name="category" ng-model="news.category" value="World">World
+               </label>
+               <label class="radio-inline">
+                 <input  type="radio" id="world" name="category" ng-model="news.category" value="India">India
+               </label>
+               <label class="radio-inline">
+                 <input  type="radio" id="world" name="category" ng-model="news.category" value="Technology">Technology
+               </label>
+            </div>
+       </div>
+        <div class="form-group" ng-class="{ 'has-error' : NewsDataForm.featuredImageurl.$error.required && !NewsDataForm.featuredImageurl.$pristine }">
+         <label for="featuredImageurl" class="col-sm-3 control-label">FeaturedImageUrl</label>
+          <div class="col-sm-9">
+          <input type="url" class="form-control" id="videoUrl" name="videourl" placeholder="Enter FeaturedImageURL Of The News" ng-model="news.featuredImageurl" required>
+           <span ng-show="NewsDataForm.featuredImageurl.$error.required && !NewsDataForm.featuredImageurl.$pristine" class="help-block">FeaturedImage URL is Required</span>
+         </div>
+      </div>
+       <div class="form-group" ng-class="{ 'has-error' : NewsDataForm.featuredImagedescription.$error.required && !NewsDataForm.featuredImagedescription.$pristine }">
+         <label for="featuredImagedescription" class="col-sm-3 control-label">FeaturedImageDescription</label>
+          <div class="col-sm-9">
+          <textarea rows="4"  class="form-control" id="featuredImagedescription" name="videourl" placeholder="Enter FeaturedImageDescription Of The News" ng-model="news.featuredImagedescription" required></textarea>
+           <span ng-show="NewsDataForm.featuredImagedescription.$error.required && !NewsDataForm.featuredImagedescription.$pristine" class="help-block">FeaturedImage Description is Required</span>
+         </div>
+      </div>
+      <div add-input>
+        <button class="btn btn-sm btn-primary pull-right" id ="Add Gallery Imgage">ADD GALLERY IMAGE</button>
+      </div>
+       <div ng-repeat="i in range(5) track by $index">
+       </div> 
+      <div class="form-group">
+       <div class="col-sm-offset-3 col-sm-9">
+           <button type="submit" class="btn btn-primary" ng-disabled="NewsDataForm.$invalid">Submit News</button>
+       </div>
+      </div>
+     </form> 
+    </div>
+  </div>
+
+     
 
 
-  <div class="container">
-<div class="row" ng-controller="NewsDataCtrl">
-  <div class="col-md-12">
-   </div>
-  <form   role="form" ng-show="loggedIn()">
-    <div class="col-lg-6">
 
+
+
+
+
+<!-- 
       <h1 class="page-header">NewsForm</h1>
       <!--div class="well well-sm"><strong><i class="glyphicon glyphicon-ok form-control-feedback"></i> Required Field</strong></div-->
-      <div class="form-group">
+     <!--  <div class="form-group">
         <label for="InputTitle">Title</label>
         <div class="input-group">
           <input type="text" class="form-control" name="InputTitle" id="InputTitle" placeholder="Title" required ng-model="news.title" autofocus>
@@ -36,13 +116,13 @@
       <div class="form-group">
         <label for="InputVideoUrl">Video URL</label>
         <div class="input-group">
-          <input type="url" class="form-control" id="InputVideoUrl" name="InputVideoUrl" placeholder="Video URL" required ng-model="news.videoUrl" >
+          <input type="url" class="form-control" id="InputVideoUrl" name="InputVideoUrl" placeholder="Video URL" ng-model="news.videoUrl" >
           <span class="input-group-addon"><i></i></span></div>
       </div>
       <div class="form-group">
         <label for="InputCategoryName">Category Name</label>
         <div class="input-group">
-          <input type="text" class="form-control" id="InputCategoryName" name="InputCategoryName" placeholder="Category Name" required ng-model="news.category.name" >
+          <input type="text" class="form-control" id="InputCategoryName" name="InputCategoryName" placeholder="Category Name"  ng-model="news.category.name" >
           <span class="input-group-addon"><i></i></span></div>
       </div>
       <div class="form-group">
@@ -54,7 +134,7 @@
        <div class="form-group">
         <label for="InputFeaturedImageDescription">Featured Image Description</label>
         <div class="input-group">
-          <input type="text" class="form-control" id="InputFeaturedImageDescription" name="InputFeaturedImageDescription" placeholder="FeaturedImage Description" required ng-model="news.featuredImage.description" >
+          <input type="text" class="form-control" id="InputFeaturedImageDescription" name="InputFeaturedImageDescription" placeholder="FeaturedImage Description"  ng-model="news.featuredImage.description" >
           <span class="input-group-addon"><i></i></span></div>
       </div>
       <div add-input>
@@ -75,4 +155,11 @@
  
 </div>
 
-</div>
+</div>  -->
+
+
+
+
+
+
+

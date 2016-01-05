@@ -1,15 +1,36 @@
-
-
-           <!-- /.row -->
-    <div class="container">
-<div class="row">
-  <div class="col-md-12">
+<div class="container">
+  <div class="row">
+    <h1 class="page-header">NewsApp Login</h1>
+     <form class="form-horizontal" name="LoginForm" ng-click="submitLogin()" novalidata=""  ng-controller="LoginCtrl" ng-hide="loggedIn()">
+       <div class="form-group" ng-class="{ 'has-error' : LoginForm.username.$error.required && !LoginForm.username.$pristine }">
+         <label for="username" class="col-sm-3 control-label">Username</label>
+          <div class="col-sm-6">
+          <input  type="text" class="form-control" id="username" name="username" placeholder="Enter Usrname" ng-model="user.username" required>
+           <span ng-show="LoginForm.username.$error.required && !LoginForm.username.$pristine" class="help-block">Username is Required</span>
+         </div>
+       </div>
+      <div class="form-group" ng-class="{ 'has-error' : LoginForm.password.$error.required && !LoginForm.password.$pristine }">
+         <label for="password" class="col-sm-3 control-label">Password</label>
+          <div class="col-sm-6">
+          <input  type="password" class="form-control" id="password" name="password" placeholder="Enter Password" ng-model="user.password" required>
+           <span ng-show="LoginForm.password.$error.required && !LoginForm.password.$pristine" class="help-block">Password is Required</span>
+         </div>
+       </div>
+        <div class="form-group">
+       <div class="col-sm-offset-3 col-sm-9">
+           <button type="submit" class="btn btn-primary" ng-disabled="LoginForm.$invalid">LOGIN</button>
+       </div>
+      </div>
+     </form>     
+  </div>
+</div>
+ <!--  <div class="col-md-12">
    </div>
   <form ng-controller="LoginCtrl" role="form" ng-hide="loggedIn()">
     <div class="col-lg-6">
-     <h1 class="page-header">NewsApp Login</h1>
+     <h1 class="page-header">NewsApp Login</h1> -->
       <!--div class="well well-sm"><strong><i class="glyphicon glyphicon-ok form-control-feedback"></i> Required Field</strong></div-->
-      <div class="form-group">
+<!--       <div class="form-group">
         <label for="InputUsername">Username</label>
         <div class="input-group">
           <input type="text" class="form-control" name="InputUsername" id="InputUsername" placeholder="Username" required ng-model="user.username">
@@ -35,8 +56,6 @@
     <strong>Success!</strong> This alert box could indicate a successful or positive action.
   You are already logged in</p>
   <hr class="featurette-divider hidden-lg">
- 
-</div>
+  -->
 
-</div>
 

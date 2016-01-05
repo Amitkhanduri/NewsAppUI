@@ -159,7 +159,7 @@ return{
                 console.log("add input")
 
 
-                var input = angular.element('<div class="form-group"> <label for="InputGalleryImageUrl">Gallery Image URL</label><div class="input-group"> <input type="url" class="form-control" id="InputGalleryImageUrl" +  name="InputGalleryImageUrl" placeholder="GalleryImage URL" required ng-model="news.galleryImages[' + scope.numberOfGalleryImages + '].url"><span class="input-group-addon"><i></i></span></div></div><div class="form-group"><label for="InputGalleryImageDescription">Gallery Image Description</label><div class="input-group"><input type="text" class="form-control" id="InputGalleryImageDescription" name="InputGalleryImageDescription" placeholder="GalleryImage Description" required ng-model="news.galleryImages[' + scope.numberOfGalleryImages + '].description"><span class="input-group-addon"><i></i></span></div></div>');
+                var input = angular.element('<div class="form-group"> <label for="InputGalleryImageUrl" class="col-sm-3">Gallery Image URL</label><div class="col-sm-3"> <input type="url" class="form-control" id="InputGalleryImageUrl" +  name="InputGalleryImageUrl" placeholder="Enter GalleryImage URL"  ng-model="news.galleryImages[' + scope.numberOfGalleryImages + '].url"></div></div><div class="form-group"><label for="InputGalleryImageDescription" class="col-sm-3">Gallery Image Description</label><div class="col-sm-9"><textarea class="form-control" id="InputGalleryImageDescription" name="InputGalleryImageDescription" placeholder="GalleryImage Description" ng-model="news.galleryImages[' + scope.numberOfGalleryImages + '].description"></textarea></div></div>');
 
                 // Compile the HTML and assign to scope
                 var compile = $compile(input)(scope);
@@ -225,22 +225,22 @@ return{
           })
     };
 
-  $scope.$watch('searchStr', function (search)
-    {
-      console.log(search);
-      if (!search || search.length == 0)
-        return 0;
-        // if searchStr is still the same..
-        // go ahead and retrieve the data
-        if (search === $scope.searchStr)
-        {
-          $http.get("http://ec2-52-27-107-78.us-west-2.compute.amazonaws.com:8080/news?search=" + search).success(function(data) {
+  // $scope.$watch('searchStr', function (search)
+  //   {
+  //     console.log(search);
+  //     if (!search || search.length == 0)
+  //       return 0;
+  //       // if searchStr is still the same..
+  //       // go ahead and retrieve the data
+  //       if (search === $scope.searchStr)
+  //       {
+  //         $http.get("http://ec2-52-27-107-78.us-west-2.compute.amazonaws.com:8080/news?search=" + search).success(function(data) {
          
-            $scope.responseData = data; 
+  //           $scope.responseData = data; 
 
-          });
-        }
-    });
+  //         });
+  //       }
+  //   });
 
       $scope.editNews = function (news) {
 
@@ -251,28 +251,28 @@ return{
       }
 
 }])
-.controller('UpdateCtrl', ['$scope', '$http','Auth', 'Constants' , 'serviceSharedData' , function ($scope, $http, Auth, Constants ,serviceSharedData) {
+// .controller('UpdateCtrl', ['$scope', '$http','Auth', 'Constants' , 'serviceSharedData' , function ($scope, $http, Auth, Constants ,serviceSharedData) {
 
-    var baseUrl = Constants.getBaseUrl();
+//     var baseUrl = Constants.getBaseUrl();
 
-     $scope.news = serviceSharedData.get();
+//      $scope.news = serviceSharedData.get();
 
-     $scope.updateNews = function() {
+//      $scope.updateNews = function() {
 
-      var updatedNews = $scope.news;
+//       var updatedNews = $scope.news;
 
-      var accesstoken = Auth.token();
+//       var accesstoken = Auth.token();
 
-      $http({
-              method : 'PUT',
-              url    :  baseUrl + '/news/{id}',
-              data    : updatedNews,   
-              headers :  {'Content-Type': 'application/json',
-                          'Authorization': "Bearer " + accesstoken
-                         }
-            })           
-      }  
-}])
+//       $http({
+//               method : 'PUT',
+//               url    :  baseUrl + '/news/{id}',
+//               data    : updatedNews,   
+//               headers :  {'Content-Type': 'application/json',
+//                           'Authorization': "Bearer " + accesstoken
+//                          }
+//             })           
+//       }  
+// }])
 .controller('LoginCtrl', ['$scope', '$http', '$location', 'Auth', 'Constants' ,function ($scope, $http , $location , Auth, Constants ) {
 
 	   var baseUrl = Constants.getBaseUrl();
