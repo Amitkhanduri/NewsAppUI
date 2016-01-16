@@ -35,30 +35,29 @@
 <div class="container" ng-controller="HomeCtrl">
   <div class="row row-content" data-ng-init="getNews(0)">
     <div class="col-xs-9 col-xs-offset-1">
-     <h1 class="page-header">{{ title }}</h1>
-        <ul class="media-list">
-         <li  class="media" dir-paginate="news in newsList() | itemsPerPage:perPage" ng-model="news" current-page="currentPage" total-items="totalItems()">
+     <h1 class="page-header text-primary">News</h1>
+        <ol class=" nav nav-pills nav-stacked">
+         <li  class="media" style="font-family:'Open sans'" dir-paginate="news in newsList() | itemsPerPage:perPage"  ng-model="news" current-page="currentPage" total-items="totalItems()">
            <blockquote>
-               <p><b>Tilte:</b> {{news.title}}</p>
+               <p><b>Title:</b> {{news.title}}</p>
                <p><b>ShortDescription:</b> {{news.shortDescription}}</p>
                <p><b>Body:</b> {{news.body}}</p>
-               <p><b>SourceUrl:</b> {{news.sourceUrl}}</p>
-               <footer>{{news.author.name}}, {{news.date}}</footer>
+               <p><b>SourceUrl:</b> <a href="{{news.sourceUrl}}" data-toggle="tooltip" title="{{news.sourceUrl}}">{{news.sourceUrl}}</a></p>
+               <p><b>VideoUrl:</b> <a href="{{news.videoUrl}}" data-toggle="tooltip" title="{{news.videoUrl}}">{{news.videoUrl}}</a></p>
+               <p><b>FeaturedImage Url:</b> <a href="{{news.featuredImage.url}}" data-toggle="tooltip" title="{{news.featuredImage.url}}">{{news.featuredImage.url}}</a></p>
+               <button ng-click="editNews(news)" ng-model="news" ng-show="loggedIn()" class="btn btn-primary pull-right glyphicon glyphicon-edit">Edit</button>
+               <footer> <b>Category:</b> {{news.category.name}}   |   <b>Author:</b> {{news.author.name}}   |   <b>Posted On:</b> {{news.date | date:mediumDate}}  | <b>News Id:</b>  <p class="badge">{{news.id}}</p></footer>
            </blockquote>
           </li>
-        </ul> 
+        </ol> 
        </div>  
+       <div class="navbar navbar-fixed-bottom">
+          <div class="text-center pager">
+            <dir-pagination-controls boundary-links="true" template-url="./app/dirPagination.tpl.html" on-page-change="pageChanged(newPageNumber)" data-toggle="tooltip" title="pager"></dir-pagination-controls>
+          </div>
+       </div>
     </div>
  </div>
 
 
- <!-- <div class="media-body">
-             <h2 class="media-heading"><label for="Title">Title:</label> {{news.title}}
-              <span class="label">{{news.shortDescription}}</span>
-              </h2>
-              <p>{{news.body}}</p>
-              <p>{{news.sourceUrl}}</p>
-              <p>{{news.videoUrl}}</p> 
-              <p>{{news.category.name}}</p>  
-            </div> -->
-   
+

@@ -1,27 +1,29 @@
 <div class="container">
   <div class="row">
-    <h1 class="page-header">NewsApp Login</h1>
-     <form class="form-horizontal" name="LoginForm" ng-click="submitLogin()" novalidata=""  ng-controller="LoginCtrl" ng-hide="loggedIn()">
-       <div class="form-group" ng-class="{ 'has-error' : LoginForm.username.$error.required && !LoginForm.username.$pristine }">
+    <h1 class="page-header text-primary">Wisdom<sup>+</sup> Login:</h1>
+     <form role="form" class="form-horizontal" name="LoginForm" ng-submit="submitLogin()" novalidate  ng-controller="LoginCtrl" ng-hide="loggedIn()">
+       <div class="form-group" ng-class= "{  'has-error' : LoginForm.username.$error.required &&  !LoginForm.username.$pristine }">
          <label for="username" class="col-sm-3 control-label">Username</label>
-          <div class="col-sm-6">
-          <input  type="text" class="form-control" id="username" name="username" placeholder="Enter Usrname" ng-model="user.username" required>
-           <span ng-show="LoginForm.username.$error.required && !LoginForm.username.$pristine" class="help-block">Username is Required</span>
+          <div class="col-sm-4">
+          <input  type="text" class="form-control" id="username" name="username" placeholder="Enter Username" ng-model="user.username" ng-required autofocus>
          </div>
        </div>
-      <div class="form-group" ng-class="{ 'has-error' : LoginForm.password.$error.required && !LoginForm.password.$pristine }">
+      <div class="form-group"  ng-class= "{  'has-error' : LoginForm.password.$error.required &&  !LoginForm.password.$pristine }">
          <label for="password" class="col-sm-3 control-label">Password</label>
-          <div class="col-sm-6">
-          <input  type="password" class="form-control" id="password" name="password" placeholder="Enter Password" ng-model="user.password" required>
-           <span ng-show="LoginForm.password.$error.required && !LoginForm.password.$pristine" class="help-block">Password is Required</span>
+          <div class="col-sm-4">
+          <input  type="password" class="form-control" id="password" name="password" placeholder="Enter Password" ng-model="user.password" ng-required="true" minlength="6" maxlength="10">
          </div>
        </div>
         <div class="form-group">
-       <div class="col-sm-offset-3 col-sm-9">
-           <button type="submit" class="btn btn-primary" ng-disabled="LoginForm.$invalid">LOGIN</button>
-       </div>
+       <div class="col-xs-offset-3 col-xs-3">
+              <p class="alert alert-danger" role="alert" ng-show="errorMsg"><strong>Error!</strong> {{errorMsg}}</p>
+              <p class="alert alert-success" role="alert" ng-show="successMsg">{{successMsg}}</p>
+           </div> 
+           <div class="col-sm-offset-3 col-sm-9">
+           <button type="submit" class="btn btn-primary" ng-disabled="LoginForm.$invalid">Login</button>
+        </div>
       </div>
-     </form>     
+     </form>   
   </div>
 </div>
  <!--  <div class="col-md-12">
@@ -59,3 +61,8 @@
   -->
 
 
+
+        <!-- <div class="col-sm-offset-3 col-sm-9">
+       <div class="alert alert-danger" role="alert" ng-show="errorMsg">{{errorMsg}}</div>
+           <button type="submit" class="btn btn-primary" ng-disabled="LoginForm.$invalid">LOGIN</button>
+       </div>      -->
