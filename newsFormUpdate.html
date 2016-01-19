@@ -1,4 +1,187 @@
+<div class="container" ng-controller="UpdateCtrl">
+<div class="row row-content">
+  <h1 class="page-header text-primary">Wisdom<sup>+</sup>Update Form:  </h1>
+   <form class="form-horizontal" name="NewsDataForm" ng-submit="updateNews()" novalidate  ng-show="loggedIn()">
+     <div class="form-group" ng-class= "{  'has-error' : LoginForm.title.$error.required  &&  !LoginForm.title.$pristine }">
+         <label for="title" class="col-sm-3 control-label">Title</label>
+          <div class="col-sm-9">
+          <textarea  rows="2" class="form-control" id="title" name="title" placeholder="Enter Title Of The News" ng-model="news.title" required autofocus maxlength="40"></textarea>
+         </div>
+      </div> 
+        <div class="form-group"  ng-class= "{  'has-error' : LoginForm.shortDescription.$error.required  &&  !LoginForm.shortDescription.$pristine }">
+         <label for="shortDescription" class="col-sm-3 control-label">ShortDescription</label>
+          <div class="col-sm-9">
+          <textarea rows="4" class="form-control" id="shortDescription" name="shortDescription" placeholder="Enter ShortDescription Of The News" ng-model="news.shortDescription" required  maxlength="140"></textarea>
+         </div>
+      </div>
+        <div class="form-group"  ng-class= "{  'has-error' : LoginForm.body.$error.required  &&  !LoginForm.body.$pristine }">
+         <label for="body" class="col-sm-3 control-label">Body</label>
+          <div class="col-sm-9">
+          <textarea rows="12" class="form-control" id="body" name="body" placeholder="Enter Body Of The News" ng-model="news.body" required ></textarea>
+         </div>
+      </div>
+       <div class="form-group"  ng-class= "{  'has-error' : LoginForm.sourceUrl.$error.required  &&  !LoginForm.sourceUrl.$pristine }">
+         <label for="sourceUrl" class="col-sm-3 control-label">SourceURL</label>
+          <div class="col-sm-9">
+          <input type="url" class="form-control" id="sourceUrl" name="sourceUrl" placeholder="Enter SourceURL Of The News" ng-model="news.sourceUrl" required>
+         </div>
+      </div>
+        <div class="form-group" ng-class= "{  'has-error' : LoginForm.videoUrl.$error.required  &&  !LoginForm.videoUrl.$pristine }">
+         <label for="videoUrl" class="col-sm-3 control-label">VideoURL</label>
+          <div class="col-sm-9">
+          <input type="url" class="form-control" id="videoUrl" name="videoUrl" placeholder="Enter VideoURL Of The News" ng-model="news.videoUrl"  ng-trim="false">
+         </div>
+      </div>    
+       <div class="form-group"  ng-class= "{  'has-error' : LoginForm.category.$error.required  &&  !LoginForm.category.$pristine }">
+           <label for="category" class="col-sm-3 control-label">Category</label>
+             <div class="col-sm-9">
+                <input type="text" class="form-control" id="category" name="category" placeholder="Enter Category Of The News" ng-model="news.category.name"  ng-trim="false">
+            </div>
+       </div>
+        <div class="form-group"  ng-class= "{  'has-error' : LoginForm.featuredImageurl.$error.required  &&  !LoginForm.featuredImageurl.$pristine }">
+         <label for="featuredImageurl" class="col-sm-3 control-label">FeaturedImageUrl</label>
+          <div class="col-sm-9">
+          <input type="url" class="form-control" id="featuredImageurl" name="featuredImageurl" placeholder="Enter FeaturedImageURL Of The News" ng-model="news.featuredImage.url" ng-trim="false">
+         </div>
+      </div>
+       <div class="form-group" ng-class= "{  'has-error' : LoginForm.featuredImagedescription.$error.required  &&  !LoginForm.featuredImagedescription.$pristine }">
+         <label for="featuredImagedescription" class="col-sm-3 control-label">FeaturedImageDescription</label>
+          <div class="col-sm-9">
+          <textarea rows="4"  class="form-control" id="featuredImagedescription" name="featuredImagedescription" placeholder="Enter FeaturedImageDescription Of The News" ng-model="news.featuredImage.description" ng-trim="false"></textarea>
+         </div>
+      </div>
+     <!--  <div add-input>
+        <button type="button" class="btn btn-sm btn-primary pull-right" id ="Add Gallery Imgage">ADD GALLERY IMAGE</button>
+      </div>
+       <div ng-repeat="i in range(5) track by $index">
+       </div>  -->
+      <div class="form-group">
+       <div class="col-sm-offset-3 col-sm-9">
+         <p class="alert alert-danger input-lg col-sm-12" role="alert" ng-show="errorMsg">{{errorMsg}}</p>
+         <p class="alert alert-success input-lg col-sm-12" role="alert" ng-show="successMsg">{{successMsg}}</p>
+       </div>
+       <div class="col-sm-offset-3 col-sm-9">
+           <button type="submit" class="btn btn-primary"  ng-disabled="NewsDataForm.$invalid">Update News</button>
+       </div>
+      </div>
+     </form> 
+    </div>
+  </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+<div class="container" ng-controller="UpdateCtrl">
+<div class="row row-content">
+  <h1 class="page-header">Update NewsForm</h1>
+   <form class="form-horizontal" name="NewsDataForm" ng-submit="updateNews()" novalidata="" ng-show="loggedIn()">
+     <div class="form-group" ng-class="{ 'has-error' : NewsDataForm.title.$error.required && !NewsDataForm.title.$pristine }">
+         <label for="title" class="col-sm-3 control-label">Title</label>
+          <div class="col-sm-9">
+          <textarea  rows="2" class="form-control" id="title" name="title" placeholder="Enter Title Of The News" ng-model="news.title" required autofocus></textarea>
+           <span ng-show="NewsDataForm.title.$error.required && !NewsDataForm.title.$pristine" class="help-block">Title is Required</span>
+         </div>
+      </div> 
+        <div class="form-group" ng-class="{ 'has-error' : NewsDataForm.shortDescription.$error.required && !NewsDataForm.shortDescription.$pristine }">
+         <label for="shortDescription" class="col-sm-3 control-label">ShortDescription</label>
+          <div class="col-sm-9">
+          <textarea rows="4" class="form-control" id="shortDescription" name="shortDescription" placeholder="Enter ShortDescription Of The News" ng-model="news.shortDescription" required ></textarea>
+           <span ng-show="NewsDataForm.shortDescription.$error.required && !NewsDataForm.shortDescription.$pristine" class="help-block">ShortDescription is Required</span>
+         </div>
+      </div>
+        <div class="form-group" ng-class="{ 'has-error' : NewsDataForm.body.$error.required && !NewsDataForm.body.$pristine }">
+         <label for="body" class="col-sm-3 control-label">Body</label>
+          <div class="col-sm-9">
+          <textarea rows="12" class="form-control" id="body" name="shortDescription" placeholder="Enter Body Of The News" ng-model="news.body" required ></textarea>
+           <span ng-show="NewsDataForm.body.$error.required && !NewsDataForm.body.$pristine" class="help-block">Body is Required</span>
+         </div>
+      </div>
+       <div class="form-group" ng-class="{ 'has-error' : NewsDataForm.sourceUrl.$error.required && !NewsDataForm.sourceUrl.$pristine }">
+         <label for="sourceUrl" class="col-sm-3 control-label">SourceURL</label>
+          <div class="col-sm-9">
+          <input type="url" class="form-control" id="videoUrl" name="sourceurl" placeholder="Enter SourceURL Of The News" ng-model="news.sourceUrl">
+           <span ng-show="NewsDataForm.sourceUrl.$error.required && !NewsDataForm.sourceUrl.$pristine" class="help-block">SourceURL is Required</span>
+         </div>
+      </div>
+        <div class="form-group" ng-class="{ 'has-error' : NewsDataForm.videoUrl.$error.required && !NewsDataForm.videoUrl.$pristine }">
+         <label for="videoUrl" class="col-sm-3 control-label">VideoURL</label>
+          <div class="col-sm-9">
+          <input type="url" class="form-control" id="videoUrl" name="videourl" placeholder="Enter VideoURL Of The News" ng-model="news.videoeUrl">
+         </div>
+      </div>    
+         <div class="form-group" ng-class="{ 'has-error' : NewsDataForm.category.$error.required && !NewsDataForm.category.$pristine }">
+           <label for="category" class="col-sm-3 control-label">Category</label>
+             <div class="col-sm-9">
+                <input type="text" class="form-control" id="category" name="category" placeholder="Enter Category Of The News" ng-model="news.category.name">
+            </div>
+       </div>
+       <div class="form-group" ng-class="{ 'has-error' : NewsDataForm.featuredImageurl.$error.required && !NewsDataForm.featuredImageurl.$pristine }">
+         <label for="featuredImageurl" class="col-sm-3 control-label">FeaturedImageUrl</label>
+          <div class="col-sm-9">
+          <input type="url" class="form-control" id="featuredImageurl" name="featuredImageurl" placeholder="Enter FeaturedImageURL Of The News" ng-model="news.featuredImage.url">
+           <span ng-show="NewsDataForm.featuredImageurl.$error.required && !NewsDataForm.featuredImageurl.$pristine" class="help-block">FeaturedImage URL is Required</span>
+         </div>
+      </div>
+       <div class="form-group" ng-class="{ 'has-error' : NewsDataForm.featuredImagedescription.$error.required && !NewsDataForm.featuredImagedescription.$pristine }">
+         <label for="featuredImagedescription" class="col-sm-3 control-label">FeaturedImageDescription</label>
+          <div class="col-sm-9">
+          <textarea rows="4"  class="form-control" id="featuredImagedescription" name="featured" placeholder="Enter FeaturedImageDescription Of The News" ng-model="news.featuredImage.description"></textarea>
+           <span ng-show="NewsDataForm.featuredImagedescription.$error.required && !NewsDataForm.featuredImagedescription.$pristine" class="help-block">FeaturedImage Description is Required</span>
+         </div>
+      </div> -->
+     <!--  <div add-input>
+        <button class="btn btn-sm btn-primary pull-right" id ="Add Gallery Imgage">ADD GALLERY IMAGE</button>
+      </div>
+       <div ng-repeat="i in range(5) track by $index">
+       </div>  -->
+   <!--    <div class="form-group">
+       <div class="col-sm-offset-3 col-sm-9">
+           <button type="submit" class="btn btn-primary" ng-disabled="NewsDataForm.$invalid">Update News</button>
+       </div>
+      </div>
+     </form> 
+    </div>
+  </div>
+ -->
+
+
+
+
+
+
+<!-- 
   <div class="UpdateCtrl">
 <div class="row" ng-controller="UpdateCtrl">
   <div class="col-md-12">
@@ -66,4 +249,4 @@
   </form>
   <hr class="featurette-divider hidden-lg">
 </div>
-</div>
+</div> -->

@@ -115,13 +115,21 @@ return{
    }
 
 }])
-.controller('NewsDataCtrl', ['$scope','$http', 'Auth', 'NewsData', 'Constants', function ($scope , $http, Auth, NewsData, Constants ) {
+.controller('NewsDataCtrl', ['$scope','$http', 'Auth', 'NewsData', 'Constants',  '$location',  function ($scope , $http, Auth, NewsData, Constants , $location ) {
 
      console.log("NewsDataCtrl scope: " + $scope)
      var baseUrl = Constants.getBaseUrl();
      console.log("Base url: " + baseUrl);
 
      $scope.numberOfGalleryImages = 0 ;
+
+
+       $scope.reset = function() {
+       
+         location.reload();
+
+     };
+
   
      $scope.submitNews = function() {
 
@@ -129,21 +137,37 @@ return{
 
          console.log("news in newsData: " + $scope.news)
         
-         var newsData=$scope.news;     
+         var newsData=$scope.news;  
+
+         $scope.NewsDataForm.$setPristine(true);   
 
          var accesstoken = Auth.token();
 
          console.log("access_token: " + accesstoken)
-
                  
      $http({
-          method  : 'POST',
+          method  : 'POST',       
           url     :  baseUrl + '/news',   
           data    :  newsData,
           headers :  {'Content-Type': 'application/json',
                       'Authorization': "Bearer " + accesstoken
                      }                             
            })
+          .success(function(response) {
+                 
+             if(response.errors) {
+                  console.log("response error: " + $response.errors.name)
+                   $scope.errorNews = response.errors.newsData;
+                   $scope.errorMsg = "News not submitted!! Try again!";
+             } else {
+
+                  $scope.successMsg = "Successfully Submitted";
+             }   
+
+          })
+          .error(function (data , status , headers, config) {
+                $scope.errorMsg = "News not submitted!! Try again!!";
+          });
      }
    
 }])
@@ -159,7 +183,7 @@ return{
                 console.log("add input")
 
 
-                var input = angular.element('<div class="form-group"> <label for="InputGalleryImageUrl">Gallery Image URL</label><div class="input-group"> <input type="url" class="form-control" id="InputGalleryImageUrl" +  name="InputGalleryImageUrl" placeholder="GalleryImage URL" required ng-model="news.galleryImages[' + scope.numberOfGalleryImages + '].url"><span class="input-group-addon"><i></i></span></div></div><div class="form-group"><label for="InputGalleryImageDescription">Gallery Image Description</label><div class="input-group"><input type="text" class="form-control" id="InputGalleryImageDescription" name="InputGalleryImageDescription" placeholder="GalleryImage Description" required ng-model="news.galleryImages[' + scope.numberOfGalleryImages + '].description"><span class="input-group-addon"><i></i></span></div></div>');
+                var input = angular.element('<div class="form-group"> <label for="InputGalleryImageUrl" class="col-sm-3">Gallery Image URL</label><div class="col-sm-6"> <input type="url" class="form-control" id="InputGalleryImageUrl"  name="InputGalleryImageUrl" placeholder="Enter GalleryImage URL"  ng-model="news.galleryImages[' + scope.numberOfGalleryImages + '].url"></div></div><div class="form-group"><label for="InputGalleryImageDescription" class="col-sm-3">Gallery Image Description</label><div class="col-sm-9"><textarea class="form-control" id="InputGalleryImageDescription" name="InputGalleryImageDescription" placeholder="GalleryImage Description" ng-model="news.galleryImages[' + scope.numberOfGalleryImages + '].description"></textarea></div></div>');
 
                 // Compile the HTML and assign to scope
                 var compile = $compile(input)(scope);
@@ -175,7 +199,7 @@ return{
 }])
 .controller("HomeCtrl", ["$scope", 'NewsData', '$http', 'Constants', '$location', 'serviceSharedData', function ($scope, NewsData, $http, Constants, $location, serviceSharedData ) {
 
-       $scope.title = "News:"
+   
        var baseUrl = Constants.getBaseUrl();
 
        $scope.newsList = NewsData.getNews;  
@@ -225,22 +249,22 @@ return{
           })
     };
 
-  $scope.$watch('searchStr', function (search)
-    {
-      console.log(search);
-      if (!search || search.length == 0)
-        return 0;
-        // if searchStr is still the same..
-        // go ahead and retrieve the data
-        if (search === $scope.searchStr)
-        {
-          $http.get("http://ec2-52-27-107-78.us-west-2.compute.amazonaws.com:8080/news?search=" + search).success(function(data) {
+  // $scope.$watch('searchStr', function (search)
+  //   {
+  //     console.log(search);
+  //     if (!search || search.length == 0)
+  //       return 0;
+  //       // if searchStr is still the same..
+  //       // go ahead and retrieve the data
+  //       if (search === $scope.searchStr)
+  //       {
+  //         $http.get("http://ec2-52-27-107-78.us-west-2.compute.amazonaws.com:8080/news?search=" + search).success(function(data) {
          
-            $scope.responseData = data; 
+  //           $scope.responseData = data; 
 
-          });
-        }
-    });
+  //         });
+  //       }
+  //   });
 
       $scope.editNews = function (news) {
 
@@ -251,6 +275,7 @@ return{
       }
 
 }])
+
 .controller('UpdateCtrl', ['$scope', '$http','Auth', 'Constants' , 'serviceSharedData' , function ($scope, $http, Auth, Constants ,serviceSharedData) {
 
     var baseUrl = Constants.getBaseUrl();
@@ -259,9 +284,13 @@ return{
 
      $scope.updateNews = function() {
 
+       $scope.news = serviceSharedData.get();
+
       var updatedNews = $scope.news;
 
       var accesstoken = Auth.token();
+
+       $scope.NewsDataForm.$setPristine(true);   
 
       $http({
               method : 'PUT',
@@ -270,16 +299,42 @@ return{
               headers :  {'Content-Type': 'application/json',
                           'Authorization': "Bearer " + accesstoken
                          }
-            })           
+            })
+
+          .success(function(response) {
+                 
+             if(response.errors) {
+                  console.log("response error: " + $response.errors.name)
+                   $scope.errorNews = response.errors.updatedNews;
+                   $scope.errorMsg = "News not submitted!! Try again!";
+             } else {
+
+                  $scope.successMsg = "Successfully Submitted";
+             }   
+
+          })
+          .error(function (data , status , headers, config) {
+                $scope.errorMsg = "News not submitted!! Try again!!";
+          });
+                  
       }  
 }])
-.controller('LoginCtrl', ['$scope', '$http', '$location', 'Auth', 'Constants' ,function ($scope, $http , $location , Auth, Constants ) {
+
+
+.controller('LoginCtrl', ['$scope', '$http', '$location', 'Auth', 'Constants' , function ($scope, $http , $location , Auth, Constants) {
 
 	   var baseUrl = Constants.getBaseUrl();
 
+
 	   console.log("scope is: " + $scope)
+
+
 	   $scope.submitLogin = function() {
 
+
+     $scope.LoginForm.$setPristine();
+
+      
 		 console.log('in submitLogin');
 
   		var formdata = "username=" + $scope.user.username + "&password=" + $scope.user.password + "&grant_type=password&scope=read+write&client_secret=123456&client_id=clientapp";
@@ -289,31 +344,32 @@ return{
             url     : baseUrl + '/oauth/token',
             data    : formdata,
             headers : {'Content-Type': 'application/x-www-form-urlencoded',
-                          'Authorization' : "Basic Y2xpZW50YXBwOjEyMzQ1Ng==",
-                          'Accept' : 'application/json'
+                        'Authorization' : "Basic Y2xpZW50YXBwOjEyMzQ1Ng==",
+                        'Accept' : 'application/json'
                       }
            })
             .success(function(response) {
             	console.log('response' + response);
               if (response.errors) {
               console.log("response error: " + $response.errors.name)
-                // Showing errors.
                 $scope.errorName = response.errors.name;                
                 $scope.errorUserName = response.errors.username;
                 $scope.errorEmail = response.errors.email;
+                $scope.errorMsg = "Authentication Failed";
               } else {
-                //$scope.access_token = response.access_token;
-                //$scope.refresh_token = response.refresh_token;
                 Auth.setAccessToken(response.access_token)
                  $location.url('/home');
+                 $scope.successMsg = "Successfully Login";
               }
             })
             .error(function (data, status, headers, config) {
+
+                 $scope.errorMsg = "Invalid Username and password";
                 // TODO
                 console.log("response error: " + $response.errors.name)
             });
           };
 	
-     }])
+     }]);
 
 })();
