@@ -1,17 +1,16 @@
 
-
 (function(){
 
 angular.module('newsModule', ['ngStorage', 'angularUtils.directives.dirPagination'])
-.factory([function () {	
+.factory([function () { 
 
 }])
 
 .config([function () {
-	console.log("News Module:: config");
+  console.log("News Module:: config");
 }])
 .run([function () {
-	console.log("News Module::running");
+  console.log("News Module::running");
 }])
 .factory('Constants', function() {
   return {
@@ -89,7 +88,7 @@ return{
 .controller('NewsCtrl', ['$scope', 'Auth', '$location',function ($scope, Auth ,$location) {
   
 
-	$scope.loggedIn = Auth.isLoggedIn;
+  $scope.loggedIn = Auth.isLoggedIn;
   $scope.token = Auth.token;
 
    $scope.$watch(Auth.isLoggedIn, function (value, oldValue) {
@@ -115,7 +114,7 @@ return{
    }
 
 }])
-.controller('NewsDataCtrl', ['$scope','$http', 'Auth', 'NewsData', 'Constants',  '$location',  function ($scope , $http, Auth, NewsData, Constants , $location ) {
+.controller('NewsDataCtrl', ['$scope','$http', 'Auth', 'NewsData', 'Constants',  '$location', '$window' , function ($scope , $http, Auth, NewsData, Constants , $location , $window) {
 
      console.log("NewsDataCtrl scope: " + $scope)
      var baseUrl = Constants.getBaseUrl();
@@ -123,14 +122,12 @@ return{
 
      $scope.numberOfGalleryImages = 0 ;
 
-
        $scope.reset = function() {
        
-         location.reload();
+         $window.location.reload();
 
      };
 
-  
      $scope.submitNews = function() {
 
          console.log("sumitNews scope: " + $scope)
@@ -197,7 +194,7 @@ return{
         }
     }
 }])
-.controller("HomeCtrl", ["$scope", 'NewsData', '$http', 'Constants', '$location', 'serviceSharedData', function ($scope, NewsData, $http, Constants, $location, serviceSharedData ) {
+.controller("HomeCtrl", ['$scope', 'NewsData', '$http', 'Constants', '$location', 'serviceSharedData','$window' , 'Auth', function ($scope, NewsData, $http, Constants, $location, serviceSharedData , $window , Auth) {
 
    
        var baseUrl = Constants.getBaseUrl();
@@ -249,22 +246,6 @@ return{
           })
     };
 
-  // $scope.$watch('searchStr', function (search)
-  //   {
-  //     console.log(search);
-  //     if (!search || search.length == 0)
-  //       return 0;
-  //       // if searchStr is still the same..
-  //       // go ahead and retrieve the data
-  //       if (search === $scope.searchStr)
-  //       {
-  //         $http.get("http://ec2-52-27-107-78.us-west-2.compute.amazonaws.com:8080/news?search=" + search).success(function(data) {
-         
-  //           $scope.responseData = data; 
-
-  //         });
-  //       }
-  //   });
 
       $scope.editNews = function (news) {
 
@@ -272,17 +253,61 @@ return{
 
         $location.url('/newsFormUpdate');
 
-      }
+      };
+
+       $scope.deleteNews = function (news) {
+        serviceSharedData.set(news);
+          if ($window.confirm("Do you want to delete the News?")) {
+             $scope.news = serviceSharedData.get();
+
+             var deleteData = $scope.news;
+
+             var accesstoken = Auth.token();
+
+                  $http({
+
+                      method : 'DELETE',
+                      url    : baseUrl + '/news/' + news.id,
+                      data   :  deleteData, 
+                      headers : {'Content-Type': 'application/json',
+                                 'Authorization': "Bearer " + accesstoken
+                                }
+                  })
+                  .success(function(response) {
+                 
+                   if(response.errors) {
+                       console.log("response error: " + $response.errors.name)
+                      $scope.errorNews = response.errors.updatedNews;
+                       $swindow.confirm("News not deleted");
+                    } else {
+
+                      $scope.successMsg = "Successfully Deleted";
+                      $window.confirm("News Deleted");
+                      $window.location.reload();
+                    }   
+
+                    })
+                     .error(function (data , status , headers, config) {
+                          $scope.errorMsg = "News not submitted!! Try again!!";
+                      });
+
+                  } else {
+                     $scope.Message = "You clicked NO.";
+                  }
+            };
+  
 
 }])
 
-.controller('UpdateCtrl', ['$scope', '$http','Auth', 'Constants' , 'serviceSharedData' , function ($scope, $http, Auth, Constants ,serviceSharedData) {
+.controller('UpdateCtrl', ['$scope', '$http','Auth', 'Constants' , 'serviceSharedData' , '$window' , '$location' , function ($scope, $http, Auth, Constants ,serviceSharedData , $window , $location) {
 
     var baseUrl = Constants.getBaseUrl();
 
      $scope.news = serviceSharedData.get();
 
-     $scope.updateNews = function() {
+     $scope.numberOfGalleryImages = 0 ;
+   
+     $scope.updateNews = function(news) {
 
        $scope.news = serviceSharedData.get();
 
@@ -290,11 +315,11 @@ return{
 
       var accesstoken = Auth.token();
 
-       $scope.NewsDataForm.$setPristine(true);   
+       $scope.UpdateNewsForm.$setPristine(true);   
 
       $http({
               method : 'PUT',
-              url    :  baseUrl + '/news/{id}',
+              url    :  baseUrl + '/news/' + updatedNews.id,
               data    : updatedNews,   
               headers :  {'Content-Type': 'application/json',
                           'Authorization': "Bearer " + accesstoken
@@ -306,15 +331,16 @@ return{
              if(response.errors) {
                   console.log("response error: " + $response.errors.name)
                    $scope.errorNews = response.errors.updatedNews;
-                   $scope.errorMsg = "News not submitted!! Try again!";
+                   $scope.errorMsg = "News not updated!! Try again!";
              } else {
-
-                  $scope.successMsg = "Successfully Submitted";
+                  $window.location.reload();
+                  $scope.successMsg = "Successfully Updated";
+                  
              }   
 
           })
           .error(function (data , status , headers, config) {
-                $scope.errorMsg = "News not submitted!! Try again!!";
+                $scope.errorMsg = "News not Updated!! Try again!!";
           });
                   
       }  
@@ -323,23 +349,23 @@ return{
 
 .controller('LoginCtrl', ['$scope', '$http', '$location', 'Auth', 'Constants' , function ($scope, $http , $location , Auth, Constants) {
 
-	   var baseUrl = Constants.getBaseUrl();
+     var baseUrl = Constants.getBaseUrl();
 
 
-	   console.log("scope is: " + $scope)
+     console.log("scope is: " + $scope)
 
 
-	   $scope.submitLogin = function() {
+     $scope.submitLogin = function() {
 
 
      $scope.LoginForm.$setPristine();
 
       
-		 console.log('in submitLogin');
+     console.log('in submitLogin');
 
-  		var formdata = "username=" + $scope.user.username + "&password=" + $scope.user.password + "&grant_type=password&scope=read+write&client_secret=123456&client_id=clientapp";
-  		
-  		 $http({
+      var formdata = "username=" + $scope.user.username + "&password=" + $scope.user.password + "&grant_type=password&scope=read+write&client_secret=123456&client_id=clientapp";
+      
+       $http({
             method  : 'POST',
             url     : baseUrl + '/oauth/token',
             data    : formdata,
@@ -349,13 +375,14 @@ return{
                       }
            })
             .success(function(response) {
-            	console.log('response' + response);
+              console.log('response' + response);
               if (response.errors) {
               console.log("response error: " + $response.errors.name)
                 $scope.errorName = response.errors.name;                
                 $scope.errorUserName = response.errors.username;
                 $scope.errorEmail = response.errors.email;
                 $scope.errorMsg = "Authentication Failed";
+                $location.url('/login');
               } else {
                 Auth.setAccessToken(response.access_token)
                  $location.url('/home');
@@ -369,7 +396,7 @@ return{
                 console.log("response error: " + $response.errors.name)
             });
           };
-	
+  
      }]);
 
 })();

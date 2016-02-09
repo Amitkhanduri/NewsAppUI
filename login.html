@@ -1,5 +1,10 @@
 <div class="container">
-  <div class="row">
+  <div>
+      <ol class="breadcrumb">
+          <li><a ui-sref="home">Home</a></li>
+          <li class="active">Login</a></li>          
+      </ol>
+  </div>
     <h1 class="page-header text-primary">Wisdom<sup>+</sup> Login:</h1>
      <form role="form" class="form-horizontal" name="LoginForm" ng-submit="submitLogin()" novalidate  ng-controller="LoginCtrl" ng-hide="loggedIn()">
        <div class="form-group" ng-class= "{  'has-error' : LoginForm.username.$error.required &&  !LoginForm.username.$pristine }">
@@ -24,45 +29,4 @@
         </div>
       </div>
      </form>   
-  </div>
 </div>
- <!--  <div class="col-md-12">
-   </div>
-  <form ng-controller="LoginCtrl" role="form" ng-hide="loggedIn()">
-    <div class="col-lg-6">
-     <h1 class="page-header">NewsApp Login</h1> -->
-      <!--div class="well well-sm"><strong><i class="glyphicon glyphicon-ok form-control-feedback"></i> Required Field</strong></div-->
-<!--       <div class="form-group">
-        <label for="InputUsername">Username</label>
-        <div class="input-group">
-          <input type="text" class="form-control" name="InputUsername" id="InputUsername" placeholder="Username" required ng-model="user.username">
-          <span class="input-group-addon"><i></i></span></div>
-      </div>
-      <div class="form-group">
-        <label for="InputPassword">Password</label>
-        <div class="input-group">
-          <input type="password" class="form-control" id="InputPassword" name="InputPassword" placeholder="Password" required ng-model="user.password" >
-          <span class="input-group-addon"><i></i></span></div>
-      </div>
-      
-      <button ng-click="submitLogin()" class="btn btn-info pull-right">LOGIN</button>
-    </div>
-
-    <script type="text/javascript">
-        console.log("loginCtrl object", loginCtrl);
-    </script>
-
-  </form>
-
-  <p ng-show="loggedIn()" class="alert alert-success">
-    <strong>Success!</strong> This alert box could indicate a successful or positive action.
-  You are already logged in</p>
-  <hr class="featurette-divider hidden-lg">
-  -->
-
-
-
-        <!-- <div class="col-sm-offset-3 col-sm-9">
-       <div class="alert alert-danger" role="alert" ng-show="errorMsg">{{errorMsg}}</div>
-           <button type="submit" class="btn btn-primary" ng-disabled="LoginForm.$invalid">LOGIN</button>
-       </div>      -->
