@@ -134,11 +134,11 @@ return{
 
          console.log("news in newsData: " + $scope.news)
         
-         var newsData=$scope.news;  
-
-         $scope.NewsDataForm.$setPristine(true);   
+         var newsData=$scope.news;   
 
          var accesstoken = Auth.token();
+
+          $scope.commentForm.$setPristine();
 
          console.log("access_token: " + accesstoken)
                  
