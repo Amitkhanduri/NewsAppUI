@@ -138,6 +138,8 @@ return{
 
          var accesstoken = Auth.token();
 
+         $scope.dataLoading = true;
+
           $scope.commentForm.$setPristine();
 
          console.log("access_token: " + accesstoken)
@@ -159,11 +161,13 @@ return{
              } else {
 
                   $scope.successMsg = "Successfully Submitted";
+                  $scope.dataLoading = false;
              }   
 
           })
           .error(function (data , status , headers, config) {
                 $scope.errorMsg = "News not submitted!! Try again!!";
+                $scope.dataLoading = false;
           });
      }
    
@@ -221,6 +225,8 @@ return{
        var galleryImages = [galleryImage];
        newsData.galleryImages = galleryImages;
 
+       $scope.dataLoading = true;
+
                  
      $http({
           method  : 'GET',
@@ -238,13 +244,18 @@ return{
               $scope.perPage = NewsData.getPagination().numberOfPages;
               $scope.currentPage = NewsData.getPagination().pageNumber + 1;
               $scope.totalItems = NewsData.getTotalItems; 
+              $scope.dataLoading = false;
 
 
               console.log("newsdata: " + $scope.newsList());
               var length = $scope.newsList().length
               console.log("newsList size after fetch: " + length  + "totalItems: " + $scope.totalItems())
           })
-    };
+          .error(function (data , status , headers, config) {
+                  $scope.errorMsg = "Check Your Internet Connection";
+                  $scope.dataLoading = false;
+            })
+       };
 
 
       $scope.editNews = function (news) {
@@ -278,7 +289,7 @@ return{
                    if(response.errors) {
                        console.log("response error: " + $response.errors.name)
                       $scope.errorNews = response.errors.updatedNews;
-                       $swindow.confirm("News not deleted");
+                      $swindow.confirm("News not deleted");
                     } else {
 
                       $scope.successMsg = "Successfully Deleted";
@@ -309,9 +320,11 @@ return{
    
      $scope.updateNews = function(news) {
 
-       $scope.news = serviceSharedData.get();
+      $scope.news = serviceSharedData.get();
 
       var updatedNews = $scope.news;
+
+      $scope.dataLoading = true;
 
       var accesstoken = Auth.token();
 
@@ -333,7 +346,7 @@ return{
                    $scope.errorNews = response.errors.updatedNews;
                    $scope.errorMsg = "News not updated!! Try again!";
              } else {
-                  $window.location.reload();
+                  $scope.dataLoading = false;
                   $scope.successMsg = "Successfully Updated";
                   
              }   
@@ -341,7 +354,8 @@ return{
           })
           .error(function (data , status , headers, config) {
                 $scope.errorMsg = "News not Updated!! Try again!!";
-          });
+                $scope.dataLoading = false;
+          })  
                   
       }  
 }])
@@ -359,6 +373,8 @@ return{
 
 
      $scope.LoginForm.$setPristine();
+
+     $scope.dataLoading = true;
 
       
      console.log('in submitLogin');
@@ -387,11 +403,13 @@ return{
                 Auth.setAccessToken(response.access_token)
                  $location.url('/home');
                  $scope.successMsg = "Successfully Login";
+                 $scope.dataLoading = false;
               }
             })
             .error(function (data, status, headers, config) {
 
                  $scope.errorMsg = "Invalid Username and password";
+                 $scope.dataLoading = false;
                 // TODO
                 console.log("response error: " + $response.errors.name)
             });

@@ -17,7 +17,7 @@
               !commentForm.title.$pristine }">
             <label for="title" class="col-sm-3 control-label">Title</label>
             <div class="col-sm-9">
-               <textarea rows="2" type="text" class="form-control" id="title" name="title" placeholder="Enter Your Title" ng-model="news.title" required="" ng-maxlength="40"></textarea>
+               <textarea rows="2" type="text" class="form-control" id="title" name="title" placeholder="Enter Your Title" ng-model="news.title" required="" maxlength="40"></textarea>
               <span ng-show="commentForm.title.$error.required &&
                 !commentForm.title.$pristine" class="help-block">Title is required.</span>
               </div>
@@ -26,7 +26,7 @@
               !commentForm.shortDescription.$pristine }">
             <label for="shortDescription" class="col-sm-3 control-label">ShortDescription</label>
             <div class="col-sm-9">
-               <textarea rows="4" type="text" class="form-control" id="shortDescription" name="shortDescription" placeholder="Enter Your ShortDescription" ng-model="news.shortDescription" required="" ng-maxlength="140"></textarea>
+               <textarea rows="4" type="text" class="form-control" id="shortDescription" name="shortDescription" placeholder="Enter Your ShortDescription" ng-model="news.shortDescription" required="" maxlength="140"></textarea>
               <span ng-show="commentForm.shortDescription.$error.required &&
                 !commentForm.shortDescription.$pristine" class="help-block">ShortDescription is required.</span>
               </div>
@@ -94,9 +94,11 @@
        <div class="col-sm-offset-3 col-sm-9">
          <p class="alert alert-danger input-lg col-sm-12" role="alert" ng-show="errorMsg">{{errorMsg}}</p>
          <p class="alert alert-success input-lg col-sm-12" role="alert" ng-show="successMsg">{{successMsg}}</p>
+         <img ng-if="dataLoading" src="./assets/img/squares.gif"/>
        </div>
        <div class="col-sm-offset-3 col-sm-9">
-           <button type="submit" class="btn btn-primary">Submit News</button>
+           <button type="submit" class="btn btn-primary" ng-disabled="dataLoading">Submit News</button>
+           <!-- <img ng-if="dataLoading" src="./assets/img/default.gif"/> -->
            <button type="button" class="btn btn-primary"  ng-click="reset()">Reset</button>
        </div>
       </div>
