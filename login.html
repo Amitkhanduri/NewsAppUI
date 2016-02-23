@@ -25,7 +25,8 @@
               <p class="alert alert-success" role="alert" ng-show="successMsg">{{successMsg}}</p>
            </div> 
            <div class="col-sm-offset-3 col-sm-9">
-           <button type="submit" class="btn btn-primary" ng-disabled="LoginForm.$invalid">Login</button>
+           <button type="submit" class="btn btn-primary" ng-disabled="LoginForm.$invalid || dataLoading">Login</button>
+            <img ng-if="dataLoading" src="./assets/img/squares.gif"/>
         </div>
       </div>
      </form>   

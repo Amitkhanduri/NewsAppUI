@@ -80,7 +80,8 @@
          <p class="alert alert-success input-lg col-sm-12" role="alert" ng-show="successMsg">{{successMsg}}</p>
        </div>
        <div class="col-sm-offset-3 col-sm-9">
-           <button type="submit" class="btn btn-primary">Update News</button>
+           <button type="submit" class="btn btn-primary" ng-disabled="dataLoading">Update News</button>
+           <img ng-if="dataLoading" src="./assets/img/squares.gif"/> 
        </div>
       </div>
      </form> 
