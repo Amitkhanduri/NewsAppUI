@@ -51,11 +51,11 @@
         </div>
         <div class="form-group" ng-class="{ 'has-error' : commentForm.videoUrl.$error.required &&
               !commentForm.videoUrl.$pristine }">
-            <label for="videoUrl" class="col-sm-3 control-label">VideoUrl</label>
+            <label for="videoUrl" class="col-sm-3 control-label">Image Credits</label>
             <div class="col-sm-9">
-               <input type="url" class="form-control" id="videoUrl" name="videoUrl" placeholder="Enter Your VideoUrl" ng-model="news.videoUrl" ng-trim="false">
+               <input type="text" class="form-control" id="videoUrl" name="videoUrl" placeholder="Enter Image Credits" ng-model="news.videoUrl" ng-trim="false">
               <span ng-show="commentForm.videoUrl.$error.required &&
-                !commentForm.videoUrl.$pristine" class="help-block">VideoUrl is required.</span>
+                !commentForm.videoUrl.$pristine" class="help-block">Image Credits is required.</span>
               </div>
         </div>
         <div class="form-group" ng-class="{ 'has-error' : commentForm.category.$error.required &&

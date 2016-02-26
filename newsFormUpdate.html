@@ -37,9 +37,9 @@
          </div>
       </div>
         <div class="form-group" ng-class= "{  'has-error' : UpdateNewsForm.videoUrl.$error.required  &&  !UpdateNewsForm.videoUrl.$pristine }">
-         <label for="videoUrl" class="col-sm-3 control-label">VideoURL</label>
+         <label for="videoUrl" class="col-sm-3 control-label">Image Credits</label>
           <div class="col-sm-9">
-          <input type="url" class="form-control" id="videoUrl" name="videoUrl" placeholder="Enter VideoURL Of The News" ng-model="news.videoUrl"  ng-trim="false">
+          <input type="text" class="form-control" id="videoUrl" name="videoUrl" placeholder="Enter Image Credits" ng-model="news.videoUrl"  ng-trim="false">
          </div>
       </div>    
        <div class="form-group"  ng-class= "{  'has-error' : UpdateNewsForm.category.$error.required  &&  !UpdateNewsForm.category.$pristine }">

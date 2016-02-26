@@ -14,7 +14,7 @@
                <p><b>ShortDescription:</b> {{news.shortDescription}}</p>
                <p><b>Body:</b> {{news.body}}</p>
                <p><b>SourceUrl:</b> <a href="{{news.sourceUrl}}" data-toggle="tooltip" title="{{news.sourceUrl}}">{{news.sourceUrl}}</a></p>
-               <p><b>VideoUrl:</b> <a href="{{news.videoUrl}}" data-toggle="tooltip" title="{{news.videoUrl}}">{{news.videoUrl}}</a></p>
+               <p><b>Image Credits:</b> {{news.videoUrl}}></p>
                <p><b>FeaturedImage Url:</b> <a href="{{news.featuredImage.url}}" data-toggle="tooltip" title="{{news.featuredImage.url}}">{{news.featuredImage.url}}</a></p>
                <button ng-click="editNews(news)" ng-model="news" ng-show="loggedIn()" class="btn btn-primary pull-right glyphicon glyphicon-edit">Edit</button>
                <footer> <b>Category:</b> {{news.category.name}}   |   <b>Author:</b> {{news.author.name}}   |   <b>Posted On:</b> {{news.date | date:mediumDate}}  | <b>News Id:</b>  <p class="badge">{{news.id}}</p></footer>
