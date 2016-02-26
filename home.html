@@ -7,7 +7,7 @@
       <img ng-if="dataLoading" src="./assets/img/square.gif"/>
        <p class="alert alert-danger input-lg col-sm-12" role="alert" ng-show="errorMsg">Check Your Internet Connection</p>
         <ol class=" nav nav-pills nav-stacked">
-         <li  class="media" style="font-family:'Open sans'" dir-paginate="news in newsList() | itemsPerPage:perPage"  ng-model="news" current-page="currentPage" total-items="totalItems()">
+         <li  class="media" style="font-family:'Open sans'" dir-paginate="news in newsList() | itemsPerPage:5"  ng-model="news" current-page="currentPage" total-items="totalItems()">
            <blockquote>
                <button  ng-click="deleteNews(news)"  ng-model="news" ng-show="loggedIn()" class="btn btn-danger pull-right glyphicon glyphicon-trash">Delete</button>
                <p><b>Title:</b> {{news.title}}</p>
