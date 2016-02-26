@@ -7,14 +7,14 @@
       <img ng-if="dataLoading" src="./assets/img/square.gif"/>
        <p class="alert alert-danger input-lg col-sm-12" role="alert" ng-show="errorMsg">Check Your Internet Connection</p>
         <ol class=" nav nav-pills nav-stacked">
-         <li  class="media" style="font-family:'Open sans'" dir-paginate="news in newsList() | itemsPerPage:perPage"  ng-model="news" current-page="currentPage" total-items="totalItems()">
+         <li  class="media" style="font-family:'Open sans'" dir-paginate="news in newsList() | itemsPerPage:5"  ng-model="news" current-page="currentPage" total-items="totalItems()">
            <blockquote>
                <button  ng-click="deleteNews(news)"  ng-model="news" ng-show="loggedIn()" class="btn btn-danger pull-right glyphicon glyphicon-trash">Delete</button>
                <p><b>Title:</b> {{news.title}}</p>
                <p><b>ShortDescription:</b> {{news.shortDescription}}</p>
                <p><b>Body:</b> {{news.body}}</p>
                <p><b>SourceUrl:</b> <a href="{{news.sourceUrl}}" data-toggle="tooltip" title="{{news.sourceUrl}}">{{news.sourceUrl}}</a></p>
-               <p><b>VideoUrl:</b> <a href="{{news.videoUrl}}" data-toggle="tooltip" title="{{news.videoUrl}}">{{news.videoUrl}}</a></p>
+               <p><b>Image Credits:</b> {{news.videoUrl}}></p>
                <p><b>FeaturedImage Url:</b> <a href="{{news.featuredImage.url}}" data-toggle="tooltip" title="{{news.featuredImage.url}}">{{news.featuredImage.url}}</a></p>
                <button ng-click="editNews(news)" ng-model="news" ng-show="loggedIn()" class="btn btn-primary pull-right glyphicon glyphicon-edit">Edit</button>
                <footer> <b>Category:</b> {{news.category.name}}   |   <b>Author:</b> {{news.author.name}}   |   <b>Posted On:</b> {{news.date | date:mediumDate}}  | <b>News Id:</b>  <p class="badge">{{news.id}}</p></footer>
