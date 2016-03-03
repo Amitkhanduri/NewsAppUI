@@ -15,7 +15,7 @@ angular.module('newsModule', ['ngStorage', 'angularUtils.directives.dirPaginatio
 .factory('Constants', function() {
   return {
     getBaseUrl: function() {
-        var baseUrl = "http://ec2-52-27-107-78.us-west-2.compute.amazonaws.com:8080/news-backend/"
+        var baseUrl = "http://localhost:8080/"
         return baseUrl;
     }
   }
@@ -147,11 +147,6 @@ return{
 
      $scope.numberOfGalleryImages = 0 ;
 
-       $scope.reset = function() {
-       
-         $window.location.reload();
-
-     };
 
      $scope.submitNews = function() {
 
@@ -187,6 +182,7 @@ return{
 
                   $scope.successMsg = "Successfully Submitted";
                   $scope.dataLoading = false;
+                  $window.location.reload();
              }   
 
           })
