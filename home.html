@@ -9,6 +9,7 @@
         <ol class=" nav nav-pills nav-stacked">
          <li  class="media" style="font-family:'Open sans'" dir-paginate="news in newsList() | itemsPerPage:5"  ng-model="news" current-page="currentPage" total-items="totalItems()">
            <blockquote>
+               <a twitter data-count='horizontal' data-url='{{news.sourceUrl}}'  data-size="medium" data-text='{{news.title}}' ><i class="fa fa-twitter"></i></a>
                <button  ng-click="deleteNews(news)"  ng-model="news" ng-show="loggedIn()" class="btn btn-danger pull-right glyphicon glyphicon-trash">Delete</button>
                <p><b>Title:</b> {{news.title}}</p>
                <p><b>ShortDescription:</b> {{news.shortDescription}}</p>

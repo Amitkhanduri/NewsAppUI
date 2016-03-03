@@ -1,7 +1,7 @@
 
 (function(){
 
-angular.module('newsModule', ['ngStorage', 'angularUtils.directives.dirPagination'])
+angular.module('newsModule', ['ngStorage', 'angularUtils.directives.dirPagination','djds4rce.angular-socialshare'])
 .factory([function () { 
 
 }])
@@ -21,6 +21,31 @@ angular.module('newsModule', ['ngStorage', 'angularUtils.directives.dirPaginatio
   }
 
   })
+.directive('twitter', ['$timeout', function($timeout) {
+    return {
+      link: function(scope, element, attr) {
+        var renderTwitterButton = debounce(function() {
+          if (attr.news.sourceUrl) {
+            $timeout(function() {
+              element[0].innerHTML = '';
+              twttr.widgets.createShareButton(
+                attr.news.sourceUrl,
+                element[0],
+                function() {}, {
+                  count: attr.count,
+                  text: attr.news.title,
+                  via: attr.via,
+                  size: attr.size
+                }
+              );
+            });
+          }
+        }, 75);
+        attr.$observe('news.sourceUrl', renderTwitterButton);
+        attr.$observe('news.title', renderTwitterButton);
+      }
+    };
+  }])
 .factory('Auth', function($localStorage){
 return{
     setAccessToken : function(the_access_token){
