@@ -1,7 +1,7 @@
 
 (function(){
 
-angular.module('newsModule', ['ngStorage', 'ngDialog', 'angularUtils.directives.dirPagination','djds4rce.angular-socialshare'])
+angular.module('newsModule', ['ngStorage', 'angularUtils.directives.dirPagination','djds4rce.angular-socialshare'])
 .factory([function () { 
 
 }])
@@ -110,7 +110,7 @@ return{
     }
        
 })
-.controller('NewsCtrl', ['$scope', 'Auth', '$location', 'ngDialog' , function ($scope, Auth ,$location, ngDialog) {
+.controller('NewsCtrl', ['$scope', 'Auth', '$location', function ($scope, Auth ,$location) {
   
 
   $scope.loggedIn = Auth.isLoggedIn;
@@ -137,10 +137,6 @@ return{
       Auth.logout()
       $location.url('/home');
    };
-   $scope.openLogin = function () {
-        ngDialog.open({ template: 'login.html', scope: $scope, className: 'ngdialog-theme-default', controller:"LoginCtrl" });
-   };
-
 }])
 .controller('NewsDataCtrl', ['$scope','$http', 'Auth', 'NewsData', 'Constants',  '$location', '$window' , function ($scope , $http, Auth, NewsData, Constants , $location , $window) {
 
@@ -385,7 +381,7 @@ return{
 }])
 
 
-.controller('LoginCtrl', ['$scope', '$http', '$location', 'Auth', 'Constants' , 'ngDialog' , function ($scope, $http , $location , Auth, Constants, ngDialog) {
+.controller('LoginCtrl', ['$scope', '$http', '$location', 'Auth', 'Constants', function ($scope, $http , $location , Auth, Constants) {
 
      var baseUrl = Constants.getBaseUrl();
 
@@ -394,6 +390,10 @@ return{
 
 
      $scope.submitLogin = function() {
+
+      $scope.LoginForm.$setPristine();
+ 
+      $scope.dataLoading = true;
  
      console.log('in submitLogin');
 
@@ -421,7 +421,7 @@ return{
                 Auth.setAccessToken(response.access_token)
                  $location.url('/home');
                  $scope.successMsg = "Successfully Login";
-                 ngDialog.close();
+                 $scope.dataLoading = false;
               }
             })
             .error(function (data, status, headers, config) {

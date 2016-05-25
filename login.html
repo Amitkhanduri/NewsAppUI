@@ -1,23 +1,32 @@
- <div class="ngdialog-message">
-        <div class="">
-            <h3>Login </h3>
+<div class="container">
+   <div>
+       <ol class="breadcrumb">
+           <li><a ui-sref="home">Home</a></li>
+           <li class="active">Login</a></li>          
+       </ol>
+   </div>
+     <h1 class="page-header text-primary">Wisdom<sup>+</sup> Login:</h1>
+      <form role="form" class="form-horizontal" name="LoginForm" ng-submit="submitLogin()" novalidate  ng-controller="LoginCtrl" ng-hide="loggedIn()">
+        <div class="form-group" ng-class= "{  'has-error' : LoginForm.username.$error.required &&  !LoginForm.username.$pristine }">
+          <label for="username" class="col-sm-3 control-label">Username</label>
+           <div class="col-sm-4">
+           <input  type="text" class="form-control" id="username" name="username" placeholder="Enter Username" ng-model="user.username" ng-required autofocus>
+          </div>
         </div>
-        <div class="">&nbsp;</div>
-        <div class="">
-            <form ng-submit="submitLogin()">
-                <div class="form-group">
-                    <label class="sr-only" for="username">Username</label>
-                    <input type="text" class="form-control input-sm" id="username" placeholder="Username" ng-model="user.username">
-                </div>
-                <div class="form-group">
-                    <label class="sr-only" for="password">Password</label>
-                    <input type="password" class="form-control input-sm" id="password" placeholder="Password" ng-model="user.password">
-                </div>
-                <button type="submit" class="btn btn-info btn-sm">Sign in</button>
-                <button type="button" class="btn btn-default btn-sm" ng-click=closeThisDialog("Cancel")>Cancel</button> &nbsp; &nbsp;
-            </form>
+       <div class="form-group"  ng-class= "{  'has-error' : LoginForm.password.$error.required &&  !LoginForm.password.$pristine }">
+          <label for="password" class="col-sm-3 control-label">Password</label>
+           <div class="col-sm-4">
+           <input  type="password" class="form-control" id="password" name="password" placeholder="Enter Password" ng-model="user.password" ng-required="true" minlength="6" maxlength="10">
+          </div>
         </div>
-        <div>
-
+         <div class="form-group">
+        <div class="col-xs-offset-3 col-xs-3">
+               <p class="alert alert-danger" role="alert" ng-show="errorMsg"><strong>Error!</strong> {{errorMsg}}</p>
+               <p class="alert alert-success" role="alert" ng-show="successMsg">{{successMsg}}</p>
+            </div> 
+            <div class="col-sm-offset-3 col-sm-9">
+            <button type="submit" class="btn btn-primary" ng-disabled="LoginForm.$invalid || dataLoading">Login</button>
+             <img ng-if="dataLoading" src="./assets/img/squares.gif"/>
         </div>
-    </div>
+    </form>   
+</div>
