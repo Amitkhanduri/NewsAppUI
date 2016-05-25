@@ -1,7 +1,7 @@
 
 (function(){
 
-angular.module('newsModule', ['ngStorage', 'angularUtils.directives.dirPagination','djds4rce.angular-socialshare'])
+angular.module('newsModule', ['ngStorage', 'ngDialog', 'angularUtils.directives.dirPagination','djds4rce.angular-socialshare'])
 .factory([function () { 
 
 }])
@@ -110,7 +110,7 @@ return{
     }
        
 })
-.controller('NewsCtrl', ['$scope', 'Auth', '$location',function ($scope, Auth ,$location) {
+.controller('NewsCtrl', ['$scope', 'Auth', '$location', 'ngDialog' , function ($scope, Auth ,$location, ngDialog) {
   
 
   $scope.loggedIn = Auth.isLoggedIn;
@@ -136,7 +136,10 @@ return{
     console.log("logout clicked");
       Auth.logout()
       $location.url('/home');
-   }
+   };
+   $scope.openLogin = function () {
+        ngDialog.open({ template: 'login.html', scope: $scope, className: 'ngdialog-theme-default', controller:"LoginCtrl" });
+   };
 
 }])
 .controller('NewsDataCtrl', ['$scope','$http', 'Auth', 'NewsData', 'Constants',  '$location', '$window' , function ($scope , $http, Auth, NewsData, Constants , $location , $window) {
@@ -382,7 +385,7 @@ return{
 }])
 
 
-.controller('LoginCtrl', ['$scope', '$http', '$location', 'Auth', 'Constants' , function ($scope, $http , $location , Auth, Constants) {
+.controller('LoginCtrl', ['$scope', '$http', '$location', 'Auth', 'Constants' , 'ngDialog' , function ($scope, $http , $location , Auth, Constants, ngDialog) {
 
      var baseUrl = Constants.getBaseUrl();
 
@@ -391,13 +394,7 @@ return{
 
 
      $scope.submitLogin = function() {
-
-
-     $scope.LoginForm.$setPristine();
-
-     $scope.dataLoading = true;
-
-      
+ 
      console.log('in submitLogin');
 
       var formdata = "username=" + $scope.user.username + "&password=" + $scope.user.password + "&grant_type=password&scope=read+write&client_secret=123456&client_id=clientapp";
@@ -424,7 +421,7 @@ return{
                 Auth.setAccessToken(response.access_token)
                  $location.url('/home');
                  $scope.successMsg = "Successfully Login";
-                 $scope.dataLoading = false;
+                 ngDialog.close();
               }
             })
             .error(function (data, status, headers, config) {
