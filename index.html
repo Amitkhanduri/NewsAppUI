@@ -18,6 +18,9 @@
     <link href="assets/css/portfolio-item.css" rel="stylesheet">
     <link href="assets/css/mystyles.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,700' rel='stylesheet' type='text/css'>
+    <link href="../bower_components/ng-dialog/css/ngDialog.min.css" rel="stylesheet">
+    <link href="../bower_components/ng-dialog/css/ngDialog-theme-plain.min.css" rel="stylesheet">
+    <link href="../bower_components/ng-dialog/css/ngDialog-theme-default.min.css" rel="stylesheet">
 </head>
 
 <body ng-app="mainApp" ng-controller="NewsCtrl as news">
@@ -36,8 +39,8 @@
                <ul class="nav navbar-nav">
                      <li class=active><a ui-sref="home">
                         <span class="glyphicon glyphicon-home" aria-hidden="true"></span> Wisdom<sup>+</sup></a></li>
-                    <li ng-hide="loggedIn()"><a ui-sref="login">
-                        <span class="glyphicon glyphicon-user" aria-hidden="true" data-toggle="tooltip" title="Login"></span> Login</a></li>
+                    <li ng-hide="loggedIn()"><a ng-click="openLogin()">
+                        <span class="glyphicon glyphicon-user" title="Login"></span> Login</a></li>
                     <li ng-show="loggedIn()"><a ui-sref="newsForm">
                          <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> 
                          Add News</a></li>
@@ -110,6 +113,7 @@
 <script src="./app/dirPagination.js"></script>
 <script src="http://platform.twitter.com/widgets.js"></script>
 <script src="./app/angular-socialshare.min.js"></script>
+<script src="../bower_components/ng-dialog/js/ngDialog.min.js"></script>
 
 
 
