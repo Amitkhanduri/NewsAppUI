@@ -15,7 +15,7 @@ angular.module('newsModule', ['ngStorage', 'angularUtils.directives.dirPaginatio
 .factory('Constants', function() {
   return {
     getBaseUrl: function() {
-        var baseUrl = "http://ec2-52-40-163-41.us-west-2.compute.amazonaws.com:8080/news-backend/"
+        var baseUrl = "http://ec2-52-39-166-191.us-west-2.compute.amazonaws.com:8080/news-backend/"
         return baseUrl;
     }
   }
